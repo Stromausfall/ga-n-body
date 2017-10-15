@@ -2,28 +2,24 @@ package net.matthiasauer.ga.calculation.domain
 
 import spock.lang.Specification
 
-class ExperimentTest extends Specification {
+class AbstractExperimentTest extends Specification {
 
     void "test experiment calls the correct Algorithms (perform one full iteration of the experiment)"() {
         given:
-            int populationCount = 2
-            int newPopulationSize = 1
-
-            GenerateAlgorithm<Chromosome> generateAlgorithm = Mock(GenerateAlgorithm)
-            SelectionAlgorithm<Chromosome> selectionAlgorithm = Mock(SelectionAlgorithm)
+            GenerateAlgorithm<Chromosome, ExperimentArgument> generateAlgorithm = Mock(GenerateAlgorithm)
+            SelectionAlgorithm<Chromosome, ExperimentArgument> selectionAlgorithm = Mock(SelectionAlgorithm)
             CrossoverAlgorithm<Chromosome> crossoverAlgorithm = Mock(CrossoverAlgorithm)
             MutationAlgorithm<Chromosome> mutationAlgorithm = Mock(MutationAlgorithm)
             ReplaceAlgorithm<Chromosome> replaceAlgorithm = Mock(ReplaceAlgorithm)
             TerminationAlgorithm<Chromosome> terminationAlgorithm = Mock(TerminationAlgorithm)
 
-            Experiment experiment = new Experiment(
+            AbstractExperiment experiment = new AbstractExperiment(
                     generateAlgorithm,
                     selectionAlgorithm,
                     crossoverAlgorithm,
                     mutationAlgorithm,
                     replaceAlgorithm,
-                    terminationAlgorithm)
-
+                    terminationAlgorithm) {}
 
             Collection<Chromosome> generatedPopulation = [
                     Mock(Chromosome), Mock(Chromosome)
@@ -37,13 +33,14 @@ class ExperimentTest extends Specification {
             Collection<Chromosome> childPopulation = [Mock(Chromosome)]
             Collection<Chromosome> mutatedChildPopulation = [Mock(Chromosome)]
             Collection<Chromosome> replacedPopulation = [generatedPopulation[0], mutatedChildPopulation[0]]
+            ExperimentArgument experimentArgument = Mock(ExperimentArgument)
 
         when:
-            experiment.execute(populationCount, newPopulationSize)
+            experiment.execute(experimentArgument)
 
         then:
             // first the generate algorithm should be called
-            1 * generateAlgorithm.generate(populationCount) >> generatedPopulation
+            1 * generateAlgorithm.generate(populationCount, experimentArgument) >> generatedPopulation
 
         then:
             // the fitness of each chromosome should be evaluated
@@ -85,8 +82,8 @@ class ExperimentTest extends Specification {
             0 * selectionAlgorithm.selectParents(_ as Collection<Chromosome>, _ as int)
             0 * crossoverAlgorithm.createOffspring(_ as Collection<ParentChromosomes<Chromosome>>)
             0 * mutationAlgorithm.mutate(_ as Collection<Chromosome>)
-            0 * replaceAlgorithm.newPopulation(_ as Collection<Chromosome>, _ as Collection<Chromosome>, _ as int)
+            0 * replaceAlgorithm.newPopulation(_ as Collection<Chromosome>, _ as Collection<Chromosome>)
             0 * terminationAlgorithm.terminate(_ as Collection<Chromosome>)
-            0 * generateAlgorithm.generate(_ as int)
+            0 * generateAlgorithm.generate(_ as int, _ as ExperimentArgument)
     }
 }
