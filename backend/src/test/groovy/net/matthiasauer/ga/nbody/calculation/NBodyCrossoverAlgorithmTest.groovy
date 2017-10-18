@@ -23,7 +23,10 @@ class NBodyCrossoverAlgorithmTest extends Specification {
             Collection<ParentChromosomes<NBodyChromosome>> parents = [
                     new ParentChromosomes<NBodyChromosome>(parentA, parentB)
             ]
-            NBodyExperimentArgument experimentArgument = new NBodyExperimentArgument(2.0)
+            NBodyExperimentArgument experimentArgument =
+                    new NBodyExperimentArgument.Builder()
+                            .withCrossOverReturnsParentLikelihood(2.0)
+                            .build()
 
         when:
             Collection<NBodyChromosome> children = classUnderTest.createOffspring(parents, experimentArgument)
@@ -49,7 +52,10 @@ class NBodyCrossoverAlgorithmTest extends Specification {
             Collection<ParentChromosomes<NBodyChromosome>> parents = [
                     new ParentChromosomes<NBodyChromosome>(parentA, parentB)
             ]
-            NBodyExperimentArgument experimentArgument = new NBodyExperimentArgument(0.50)
+            NBodyExperimentArgument experimentArgument =
+                    new NBodyExperimentArgument.Builder()
+                            .withCrossOverReturnsParentLikelihood(0.5)
+                            .build()
 
         when:
             Collection<NBodyChromosome> children = classUnderTest.createOffspring(parents, experimentArgument)
@@ -76,7 +82,10 @@ class NBodyCrossoverAlgorithmTest extends Specification {
             Collection<ParentChromosomes<NBodyChromosome>> parents = [
                     new ParentChromosomes<NBodyChromosome>(parentA, parentB)
             ]
-            NBodyExperimentArgument experimentArgument = new NBodyExperimentArgument(0.50)
+            NBodyExperimentArgument experimentArgument =
+                    new NBodyExperimentArgument.Builder()
+                            .withCrossOverReturnsParentLikelihood(0.5)
+                            .build()
 
         when:
             Collection<NBodyChromosome> children = classUnderTest.createOffspring(parents, experimentArgument)

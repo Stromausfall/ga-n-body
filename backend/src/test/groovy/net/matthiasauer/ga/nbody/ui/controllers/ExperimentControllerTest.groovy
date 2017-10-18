@@ -15,7 +15,7 @@ class ExperimentControllerTest extends Specification {
     void "test that the endpoint exists"() {
         given:
             ExperimentService experimentService = Mock(ExperimentService)
-            ExperimentController classUnderTest = new ExperimentController(experimentService)
+                ExperimentController classUnderTest = new ExperimentController(experimentService)
             MockMvc mockMvc = MockMvcBuilders.standaloneSetup(classUnderTest).build()
 
         when:
