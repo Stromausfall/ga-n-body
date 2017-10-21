@@ -24,8 +24,8 @@ public class NBodyCrossoverAlgorithm implements CrossoverAlgorithm<NBodyChromoso
             NBodyChromosome parentB,
             NBodyExperimentArgument experimentArgument) {
         // there is a chance that no crossover happens
-        if (this.random.getNextDouble() < experimentArgument.getCrossOverReturnsParentLikelihood()) {
-            if (this.random.getNextBoolean()) {
+        if (this.random.nextDouble() < experimentArgument.getCrossOverReturnsParentLikelihood()) {
+            if (this.random.nextBoolean()) {
                 return parentA;
             } else {
                 return parentB;
@@ -38,7 +38,7 @@ public class NBodyCrossoverAlgorithm implements CrossoverAlgorithm<NBodyChromoso
         assert parentA.getAlleles().size() == parentB.getAlleles().size();
 
         for (int i = 0; i < parentA.getAlleles().size(); i++) {
-            if (this.random.getNextBoolean()) {
+            if (this.random.nextBoolean()) {
                 offspringAlleles.add(parentA.getAlleles().get(i));
             } else {
                 offspringAlleles.add(parentB.getAlleles().get(i));

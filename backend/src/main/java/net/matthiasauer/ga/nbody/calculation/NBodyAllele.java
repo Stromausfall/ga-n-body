@@ -1,15 +1,13 @@
 package net.matthiasauer.ga.nbody.calculation;
 
-import java.math.BigDecimal;
-
 public class NBodyAllele {
-    private final BigDecimal posX;
-    private final BigDecimal posY;
-    private final BigDecimal mass;
-    private final BigDecimal velocityX;
-    private final BigDecimal velocityY;
+    private final double posX;
+    private final double posY;
+    private final double mass;
+    private final double velocityX;
+    private final double velocityY;
 
-    public NBodyAllele(BigDecimal posX, BigDecimal posY, BigDecimal mass, BigDecimal velocityX, BigDecimal velocityY) {
+    public NBodyAllele(double posX, double posY, double mass, double velocityX, double velocityY) {
         this.posX = posX;
         this.posY = posY;
         this.mass = mass;
@@ -17,23 +15,23 @@ public class NBodyAllele {
         this.velocityY = velocityY;
     }
 
-    public BigDecimal getPosX() {
+    public double getPosX() {
         return posX;
     }
 
-    public BigDecimal getPosY() {
+    public double getPosY() {
         return posY;
     }
 
-    public BigDecimal getMass() {
+    public double getMass() {
         return mass;
     }
 
-    public BigDecimal getVelocityX() {
+    public double getVelocityX() {
         return velocityX;
     }
 
-    public BigDecimal getVelocityY() {
+    public double getVelocityY() {
         return velocityY;
     }
 }

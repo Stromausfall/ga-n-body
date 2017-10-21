@@ -1,13 +1,23 @@
 package net.matthiasauer.ga.nbody.calculation;
 
 import net.matthiasauer.ga.calculation.GenerateAlgorithm;
+import net.matthiasauer.ga.calculation.RandomProvider;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+@Component
 public class NBodyGenerateAlgorithm implements GenerateAlgorithm<NBodyChromosome, NBodyExperimentArgument> {
+    private final RandomProvider randomProvider;
+
+    @Autowired
+    public NBodyGenerateAlgorithm(RandomProvider randomProvider) {
+        this.randomProvider = randomProvider;
+    }
+
     @Override
     public Collection<NBodyChromosome> generate(NBodyExperimentArgument experimentArgument) {
         Collection<NBodyChromosome> chromosomes = new ArrayList<>();
@@ -31,10 +41,10 @@ public class NBodyGenerateAlgorithm implements GenerateAlgorithm<NBodyChromosome
 
     private NBodyAllele createNBodyAllele(NBodyExperimentArgument experimentArgument) {
         return new NBodyAllele(
-                BigDecimal.ONE,
-                BigDecimal.ONE,
-                BigDecimal.ONE,
-                BigDecimal.ONE,
-                BigDecimal.ONE);
+                this.randomProvider.nextDouble(experimentArgument.getMinPosXY(), experimentArgument.getMaxPosXY()),
+                this.randomProvider.nextDouble(experimentArgument.getMinPosXY(), experimentArgument.getMaxPosXY()),
+                this.randomProvider.nextDouble(experimentArgument.getMinMass(), experimentArgument.getMaxMass()),
+                this.randomProvider.nextDouble(experimentArgument.getMinVelocityXY(), experimentArgument.getMaxVelocityYY()),
+                this.randomProvider.nextDouble(experimentArgument.getMinVelocityXY(), experimentArgument.getMaxVelocityYY()));
     }
 }
