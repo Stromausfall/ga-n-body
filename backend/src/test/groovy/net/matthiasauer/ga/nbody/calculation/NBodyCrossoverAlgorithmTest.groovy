@@ -91,7 +91,7 @@ class NBodyCrossoverAlgorithmTest extends Specification {
             Collection<NBodyChromosome> children = classUnderTest.createOffspring(parents, experimentArgument)
 
         then:
-            randomProvider.nextDouble >> 0.99
+            randomProvider.nextDouble() >> 0.99
             // offs pring is NOT a parent
             children[0] != parentA
             children[0] != parentB

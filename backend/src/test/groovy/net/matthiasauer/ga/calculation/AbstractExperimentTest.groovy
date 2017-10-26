@@ -8,8 +8,8 @@ class AbstractExperimentTest extends Specification {
         given:
             GenerateAlgorithm<Chromosome, ExperimentArgument> generateAlgorithm = Mock(GenerateAlgorithm)
             SelectionAlgorithm<Chromosome, ExperimentArgument> selectionAlgorithm = Mock(SelectionAlgorithm)
-            CrossoverAlgorithm<Chromosome> crossoverAlgorithm = Mock(CrossoverAlgorithm)
-            MutationAlgorithm<Chromosome> mutationAlgorithm = Mock(MutationAlgorithm)
+            CrossoverAlgorithm<Chromosome, ExperimentArgument> crossoverAlgorithm = Mock(CrossoverAlgorithm)
+            MutationAlgorithm<Chromosome, ExperimentArgument> mutationAlgorithm = Mock(MutationAlgorithm)
             ReplaceAlgorithm<Chromosome> replaceAlgorithm = Mock(ReplaceAlgorithm)
             TerminationAlgorithm<Chromosome> terminationAlgorithm = Mock(TerminationAlgorithm)
 
@@ -43,35 +43,25 @@ class AbstractExperimentTest extends Specification {
             1 * generateAlgorithm.generate(experimentArgument) >> generatedPopulation
 
         then:
-            // the fitness of each chromosome should be evaluated
-            1 * generatedPopulation[0].calculateFitness()
-            1 * generatedPopulation[1].calculateFitness()
-
-        then:
-            // check if the experiment can be terminated
-            1 * terminationAlgorithm.terminate(generatedPopulation) >> false
-
-        then:
             // perform the selection algorithm to create the parents for the new chromosomes
             1 * selectionAlgorithm.selectParents(generatedPopulation, experimentArgument) >> parentChromosomes
 
         then:
             // perform crossover
-            1 * crossoverAlgorithm.createOffspring(parentChromosomes) >> childPopulation
+            1 * crossoverAlgorithm.createOffspring(parentChromosomes, experimentArgument) >> childPopulation
 
         then:
             // perform mutation
-            1 * mutationAlgorithm.mutate(childPopulation) >> mutatedChildPopulation
+            1 * mutationAlgorithm.mutate(childPopulation, experimentArgument) >> mutatedChildPopulation
+
+        then:
+            // the fitness of each chromosome should be evaluated
+            1 * generatedPopulation[0].calculateFitness(experimentArgument)
+            1 * generatedPopulation[1].calculateFitness(experimentArgument)
 
         then:
             // select
             1 * replaceAlgorithm.newPopulation(generatedPopulation, mutatedChildPopulation) >> replacedPopulation
-
-        then:
-            // ONE iteration finished, now the next one is started
-            // the fitness of each chromsome should be evaluated
-            1 * replacedPopulation[0].calculateFitness()
-            1 * replacedPopulation[1].calculateFitness()
 
         then:
             // check if the experiment can be terminated
@@ -80,8 +70,8 @@ class AbstractExperimentTest extends Specification {
         then:
             // make sure that the experiment is terminated
             0 * selectionAlgorithm.selectParents(_ as Collection<Chromosome>, _ as ExperimentArgument)
-            0 * crossoverAlgorithm.createOffspring(_ as Collection<ParentChromosomes<Chromosome>>)
-            0 * mutationAlgorithm.mutate(_ as Collection<Chromosome>)
+            0 * crossoverAlgorithm.createOffspring(_ as Collection<ParentChromosomes<Chromosome>>, _ as ExperimentArgument)
+            0 * mutationAlgorithm.mutate(_ as Collection<Chromosome>, _ as ExperimentArgument)
             0 * replaceAlgorithm.newPopulation(_ as Collection<Chromosome>, _ as Collection<Chromosome>)
             0 * terminationAlgorithm.terminate(_ as Collection<Chromosome>)
             0 * generateAlgorithm.generate(_ as ExperimentArgument)

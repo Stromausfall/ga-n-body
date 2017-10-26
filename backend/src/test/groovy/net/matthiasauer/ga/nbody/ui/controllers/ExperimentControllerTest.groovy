@@ -15,7 +15,7 @@ class ExperimentControllerTest extends Specification {
     void "test that the endpoint exists"() {
         given:
             ExperimentService experimentService = Mock(ExperimentService)
-                ExperimentController classUnderTest = new ExperimentController(experimentService)
+            ExperimentController classUnderTest = new ExperimentController(experimentService)
             MockMvc mockMvc = MockMvcBuilders.standaloneSetup(classUnderTest).build()
 
         when:
@@ -46,13 +46,12 @@ class ExperimentControllerTest extends Specification {
             1 * experimentService.createExperiment(_ as NBodyExperimentArgument) >> {
                 arguments ->
                     assert arguments[0] instanceof NBodyExperimentArgument
+
+                    return experimentId
             }
 
         then:
-            // make sure that the data is correctly formatted
-            response.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8))
-
             // make sure that the content is the id returned by the experimentService
-            response.andReturn().getResponse().getContentAsString() == experimentId
+            response.andReturn().getResponse().getContentAsString() == experimentId.toString()
     }
 }

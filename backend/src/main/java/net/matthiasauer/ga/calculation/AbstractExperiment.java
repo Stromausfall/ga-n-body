@@ -31,7 +31,6 @@ public abstract class AbstractExperiment<T extends Chromosome<S>, S extends Expe
         // START - create a new population
         Collection<T> population = this.generateAlgorithm.generate(experimentArgument);
 
-        // FITNESS + TEST
         do {
             // SELECTION - select parents from the population
             Collection<ParentChromosomes<T>> parents = this.selectionAlgorithm.selectParents(population, experimentArgument);
@@ -48,11 +47,10 @@ public abstract class AbstractExperiment<T extends Chromosome<S>, S extends Expe
             mutatedChildren.parallelStream().forEach(
                     (T element) -> element.calculateFitness(experimentArgument));
 
-
             // REPLACE - merge the old and new population
             population = this.replaceAlgorithm.newPopulation(population, mutatedChildren);
 
             // FINISH - check the termination criteria
-        } while (this.terminationAlgorithm.terminate(population));
+        } while (!this.terminationAlgorithm.terminate(population));
     }
 }
