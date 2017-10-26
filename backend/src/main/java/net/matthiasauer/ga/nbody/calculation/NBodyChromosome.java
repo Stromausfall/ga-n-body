@@ -10,9 +10,16 @@ import java.util.List;
 
 public class NBodyChromosome implements Chromosome<NBodyExperimentArgument> {
     private final List<NBodyAllele> alleles;
+    private final double fitness;
 
     public NBodyChromosome(Collection<NBodyAllele> alleles) {
         this.alleles = Collections.unmodifiableList(new LinkedList<>(alleles));
+        this.fitness = Double.NaN;
+    }
+
+    public NBodyChromosome(List<NBodyAllele> alleles, double fitness) {
+        this.alleles = alleles;
+        this.fitness = fitness;
     }
 
     //TODO: implement the fitness function
@@ -23,5 +30,9 @@ public class NBodyChromosome implements Chromosome<NBodyExperimentArgument> {
 
     public List<NBodyAllele> getAlleles() {
         return alleles;
+    }
+
+    public double getFitness() {
+        return fitness;
     }
 }

@@ -61,7 +61,7 @@ class AbstractExperimentTest extends Specification {
 
         then:
             // select
-            1 * replaceAlgorithm.newPopulation(generatedPopulation, mutatedChildPopulation) >> replacedPopulation
+            1 * replaceAlgorithm.newPopulation(generatedPopulation, mutatedChildPopulation, experimentArgument) >> replacedPopulation
 
         then:
             // check if the experiment can be terminated

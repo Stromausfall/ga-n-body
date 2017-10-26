@@ -7,7 +7,7 @@ public abstract class AbstractExperiment<T extends Chromosome<S>, S extends Expe
     private final SelectionAlgorithm<T, S> selectionAlgorithm;
     private final CrossoverAlgorithm<T, S> crossoverAlgorithm;
     private final MutationAlgorithm<T, S> mutationAlgorithm;
-    private final ReplaceAlgorithm<T> replaceAlgorithm;
+    private final ReplaceAlgorithm<T, S> replaceAlgorithm;
     private final TerminationAlgorithm<T> terminationAlgorithm;
 
     public AbstractExperiment(
@@ -15,7 +15,7 @@ public abstract class AbstractExperiment<T extends Chromosome<S>, S extends Expe
             SelectionAlgorithm<T, S> selectionAlgorithm,
             CrossoverAlgorithm<T, S> crossoverAlgorithm,
             MutationAlgorithm<T, S> mutationAlgorithm,
-            ReplaceAlgorithm<T> replaceAlgorithm,
+            ReplaceAlgorithm<T, S> replaceAlgorithm,
             TerminationAlgorithm<T> terminationAlgorithm) {
         this.generateAlgorithm = generateAlgorithm;
         this.selectionAlgorithm = selectionAlgorithm;
@@ -48,7 +48,7 @@ public abstract class AbstractExperiment<T extends Chromosome<S>, S extends Expe
                     (T element) -> element.calculateFitness(experimentArgument));
 
             // REPLACE - merge the old and new population
-            population = this.replaceAlgorithm.newPopulation(population, mutatedChildren);
+            population = this.replaceAlgorithm.newPopulation(population, mutatedChildren, experimentArgument);
 
             // FINISH - check the termination criteria
         } while (!this.terminationAlgorithm.terminate(population));
