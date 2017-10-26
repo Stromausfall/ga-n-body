@@ -12,6 +12,7 @@ public class NBodyExperimentArgument implements ExperimentArgument {
     private final double maxMass;
     private final double minVelocityXY;
     private final double maxVelocityYY;
+    private final double mutateNucleotideChance;
 
     private NBodyExperimentArgument(Builder builder) {
         populationSize = builder.populationSize;
@@ -23,6 +24,7 @@ public class NBodyExperimentArgument implements ExperimentArgument {
         maxMass = builder.maxMass;
         minVelocityXY = builder.minVelocityXY;
         maxVelocityYY = builder.maxVelocityYY;
+        mutateNucleotideChance = builder.mutateNucleotideChance;
     }
 
     public int getPopulationSize() {
@@ -61,6 +63,9 @@ public class NBodyExperimentArgument implements ExperimentArgument {
         return maxVelocityYY;
     }
 
+    public double getMutateNucleotideChance() {
+        return mutateNucleotideChance;
+    }
 
     public static final class Builder {
         private int populationSize;
@@ -72,6 +77,7 @@ public class NBodyExperimentArgument implements ExperimentArgument {
         private double maxMass;
         private double minVelocityXY;
         private double maxVelocityYY;
+        private double mutateNucleotideChance;
 
         public Builder() {
         }
@@ -118,6 +124,11 @@ public class NBodyExperimentArgument implements ExperimentArgument {
 
         public Builder withMaxVelocityYY(double maxVelocityYY) {
             this.maxVelocityYY = maxVelocityYY;
+            return this;
+        }
+
+        public Builder withMutateNucleotideChance(double mutateNucleoidChance) {
+            this.mutateNucleotideChance = mutateNucleoidChance;
             return this;
         }
 

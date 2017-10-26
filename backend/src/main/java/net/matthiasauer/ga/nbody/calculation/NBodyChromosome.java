@@ -11,7 +11,7 @@ import java.util.List;
 public class NBodyChromosome implements Chromosome<NBodyExperimentArgument> {
     private final List<NBodyAllele> alleles;
 
-    public NBodyChromosome(List<NBodyAllele> alleles) {
+    public NBodyChromosome(Collection<NBodyAllele> alleles) {
         this.alleles = Collections.unmodifiableList(new LinkedList<>(alleles));
     }
 

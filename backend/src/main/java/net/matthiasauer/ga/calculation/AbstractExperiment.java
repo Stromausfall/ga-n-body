@@ -6,7 +6,7 @@ public abstract class AbstractExperiment<T extends Chromosome<S>, S extends Expe
     private final GenerateAlgorithm<T, S> generateAlgorithm;
     private final SelectionAlgorithm<T, S> selectionAlgorithm;
     private final CrossoverAlgorithm<T, S> crossoverAlgorithm;
-    private final MutationAlgorithm<T> mutationAlgorithm;
+    private final MutationAlgorithm<T, S> mutationAlgorithm;
     private final ReplaceAlgorithm<T> replaceAlgorithm;
     private final TerminationAlgorithm<T> terminationAlgorithm;
 
@@ -14,7 +14,7 @@ public abstract class AbstractExperiment<T extends Chromosome<S>, S extends Expe
             GenerateAlgorithm<T, S> generateAlgorithm,
             SelectionAlgorithm<T, S> selectionAlgorithm,
             CrossoverAlgorithm<T, S> crossoverAlgorithm,
-            MutationAlgorithm<T> mutationAlgorithm,
+            MutationAlgorithm<T, S> mutationAlgorithm,
             ReplaceAlgorithm<T> replaceAlgorithm,
             TerminationAlgorithm<T> terminationAlgorithm) {
         this.generateAlgorithm = generateAlgorithm;
@@ -40,7 +40,7 @@ public abstract class AbstractExperiment<T extends Chromosome<S>, S extends Expe
             Collection<T> children = this.crossoverAlgorithm.createOffspring(parents, experimentArgument);
 
             // MUTATE - mutate the children
-            Collection<T> mutatedChildren = this.mutationAlgorithm.mutate(children);
+            Collection<T> mutatedChildren = this.mutationAlgorithm.mutate(children, experimentArgument);
 
             // FITNESS
             population.parallelStream().forEach(

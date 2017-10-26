@@ -11,7 +11,7 @@ public class NBodyExperiment extends AbstractExperiment<NBodyChromosome, NBodyEx
             GenerateAlgorithm<NBodyChromosome, NBodyExperimentArgument> generateAlgorithm,
             SelectionAlgorithm<NBodyChromosome, NBodyExperimentArgument> selectionAlgorithm,
             CrossoverAlgorithm<NBodyChromosome, NBodyExperimentArgument> crossoverAlgorithm,
-            MutationAlgorithm<NBodyChromosome> mutationAlgorithm,
+            MutationAlgorithm<NBodyChromosome, NBodyExperimentArgument> mutationAlgorithm,
             ReplaceAlgorithm<NBodyChromosome> replaceAlgorithm,
             TerminationAlgorithm<NBodyChromosome> terminationAlgorithm) {
         super(
