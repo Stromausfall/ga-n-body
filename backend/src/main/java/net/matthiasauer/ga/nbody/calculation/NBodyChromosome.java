@@ -22,16 +22,11 @@ public class NBodyChromosome implements Chromosome<NBodyExperimentArgument> {
         this.fitness = fitness;
     }
 
-    //TODO: implement the fitness function
-    @Override
-    public BigDecimal calculateFitness(NBodyExperimentArgument experimentArgument) {
-        return null;
-    }
-
     public List<NBodyAllele> getAlleles() {
         return alleles;
     }
 
+    @Override
     public double getFitness() {
         return fitness;
     }

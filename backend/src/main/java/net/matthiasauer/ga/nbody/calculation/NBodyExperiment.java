@@ -9,13 +9,15 @@ public class NBodyExperiment extends AbstractExperiment<NBodyChromosome, NBodyEx
     @Autowired
     public NBodyExperiment(
             GenerateAlgorithm<NBodyChromosome, NBodyExperimentArgument> generateAlgorithm,
+            FitnessAlgorithm<NBodyChromosome, NBodyExperimentArgument> fitnessAlgorithm,
             SelectionAlgorithm<NBodyChromosome, NBodyExperimentArgument> selectionAlgorithm,
             CrossoverAlgorithm<NBodyChromosome, NBodyExperimentArgument> crossoverAlgorithm,
             MutationAlgorithm<NBodyChromosome, NBodyExperimentArgument> mutationAlgorithm,
             ReplaceAlgorithm<NBodyChromosome, NBodyExperimentArgument> replaceAlgorithm,
-            TerminationAlgorithm<NBodyChromosome> terminationAlgorithm) {
+            TerminationAlgorithm<NBodyChromosome, NBodyExperimentArgument> terminationAlgorithm) {
         super(
                 generateAlgorithm,
+                fitnessAlgorithm,
                 selectionAlgorithm,
                 crossoverAlgorithm,
                 mutationAlgorithm,
