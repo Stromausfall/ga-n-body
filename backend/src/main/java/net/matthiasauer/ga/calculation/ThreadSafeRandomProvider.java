@@ -8,6 +8,11 @@ import java.util.concurrent.ThreadLocalRandom;
 public class ThreadSafeRandomProvider implements RandomProvider {
 
     @Override
+    public int nextInt(int origin, int bound) {
+        return ThreadLocalRandom.current().nextInt(origin, bound);
+    }
+
+    @Override
     public double nextDouble(double origin, double bound) {
         return ThreadLocalRandom.current().nextDouble(origin, bound);
     }

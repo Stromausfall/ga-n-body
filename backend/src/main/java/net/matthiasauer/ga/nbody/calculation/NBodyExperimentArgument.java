@@ -4,6 +4,7 @@ import net.matthiasauer.ga.calculation.ExperimentArgument;
 
 public class NBodyExperimentArgument implements ExperimentArgument {
     private final int populationSize;
+    private final int newPopulationSize;
     private final int allelesPerChromosome;
     private final double crossOverReturnsParentLikelihood;
     private final double minPosXY;
@@ -16,6 +17,7 @@ public class NBodyExperimentArgument implements ExperimentArgument {
 
     private NBodyExperimentArgument(Builder builder) {
         populationSize = builder.populationSize;
+        newPopulationSize = builder.newPopulationSize;
         allelesPerChromosome = builder.allelesPerChromosome;
         crossOverReturnsParentLikelihood = builder.crossOverReturnsParentLikelihood;
         minPosXY = builder.minPosXY;
@@ -29,6 +31,10 @@ public class NBodyExperimentArgument implements ExperimentArgument {
 
     public int getPopulationSize() {
         return populationSize;
+    }
+
+    public int getNewPopulationSize() {
+        return newPopulationSize;
     }
 
     public int getAllelesPerChromosome() {
@@ -69,6 +75,7 @@ public class NBodyExperimentArgument implements ExperimentArgument {
 
     public static final class Builder {
         private int populationSize;
+        private int newPopulationSize;
         private int allelesPerChromosome;
         private double crossOverReturnsParentLikelihood;
         private double minPosXY;
@@ -84,6 +91,11 @@ public class NBodyExperimentArgument implements ExperimentArgument {
 
         public Builder withPopulationSize(int populationSize) {
             this.populationSize = populationSize;
+            return this;
+        }
+
+        public Builder withNewPopulationSize(int newPopulationSize) {
+            this.newPopulationSize = newPopulationSize;
             return this;
         }
 
@@ -127,8 +139,8 @@ public class NBodyExperimentArgument implements ExperimentArgument {
             return this;
         }
 
-        public Builder withMutateNucleotideChance(double mutateNucleoidChance) {
-            this.mutateNucleotideChance = mutateNucleoidChance;
+        public Builder withMutateNucleotideChance(double mutateNucleotideChance) {
+            this.mutateNucleotideChance = mutateNucleotideChance;
             return this;
         }
 
