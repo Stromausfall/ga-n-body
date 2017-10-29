@@ -1,6 +1,7 @@
 /* globals __DEV__ */
 import Phaser from 'phaser'
 import Mushroom from '../sprites/Mushroom'
+import WorldModel from '../sprites/WorldModel'
 
 export default class extends Phaser.State {
   init () {}
@@ -16,19 +17,49 @@ export default class extends Phaser.State {
     banner.smoothed = false
     banner.anchor.setTo(0.5)
 
-    this.mushroom = new Mushroom({
+
+    // create the world object and call the foo method maxSteps times
+    let maxSteps = 25000
+    this.world2 = new WorldModel({
+      bodies:[
+        ["1", {positionX: 50, positionY: 50, velocityX:-2, velocityY: 2, mass:500}],
+        ["2", {positionX: 50, positionY:100, velocityX: 2, velocityY:-2, mass:150}],
+        ["3", {positionX:100, positionY: 50, velocityX:-2, velocityY: 2, mass:250}],
+        ["4", {positionX:100, positionY:100, velocityX: 2, velocityY:-2, mass:700}]
+      ]})
+    game.time.events.repeat(Phaser.Timer.SECOND * 0.05, maxSteps, this.world2.update, this.world2);
+    
+
+
+
+    this.mushroom1 = new Mushroom({
       game: this.game,
-      x: this.world.centerX,
-      y: this.world.centerY,
-      asset: 'mushroom'
+      asset: 'mushroom',
+      world2:this.world2,
+      id: "1"
     })
-
-    this.game.add.existing(this.mushroom)
-  }
-
-  render () {
-    if (__DEV__) {
-      this.game.debug.spriteInfo(this.mushroom, 32, 32)
-    }
+    this.mushroom2 = new Mushroom({
+      game: this.game,
+      asset: 'mushroom',
+      world2:this.world2,
+      id: "2"
+    })
+    this.mushroom3 = new Mushroom({
+      game: this.game,
+      asset: 'mushroom',
+      world2:this.world2,
+      id: "3"
+    })
+    this.mushroom4 = new Mushroom({
+      game: this.game,
+      asset: 'mushroom',
+      world2:this.world2,
+      id: "4"
+    })
+    
+    this.game.add.existing(this.mushroom1)
+    this.game.add.existing(this.mushroom2)
+    this.game.add.existing(this.mushroom3)
+    this.game.add.existing(this.mushroom4)
   }
 }
