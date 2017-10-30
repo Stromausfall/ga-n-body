@@ -22,10 +22,10 @@ export default class extends Phaser.State {
     let maxSteps = 25000
     this.world2 = new WorldModel({
       bodies:[
-        ["1", {positionX: 50, positionY: 50, velocityX:-2, velocityY: 2, mass:500}],
-        ["2", {positionX: 50, positionY:100, velocityX: 2, velocityY:-2, mass:150}],
-        ["3", {positionX:100, positionY: 50, velocityX:-2, velocityY: 2, mass:250}],
-        ["4", {positionX:100, positionY:100, velocityX: 2, velocityY:-2, mass:700}]
+        ["1", {positionX:350, positionY: 50, velocityX:-2, velocityY: 2, mass:1}],
+        ["2", {positionX:150, positionY:300, velocityX: 2, velocityY:-2, mass:2}],
+        ["3", {positionX: 40, positionY: 50, velocityX:-2, velocityY:-2, mass:3}],
+        ["4", {positionX:400, positionY:300, velocityX: 2, velocityY: 2, mass:1}]
       ]})
     game.time.events.repeat(Phaser.Timer.SECOND * 0.05, maxSteps, this.world2.update, this.world2);
     
