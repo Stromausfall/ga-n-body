@@ -15,7 +15,8 @@ public class NBodyExperimentArgument implements ExperimentArgument {
     private final double maxVelocityYY;
     private final double mutateNucleotideChance;
     private final int fitnessMaxIterations;
-    private final double fitnessMaxDistance;
+    private final double fitnessMaxDistanceBetweenBodies;
+    private final double fitnessMinDistanceBetweenBodies;
     private final double fitnessGravityConstant;
 
     private NBodyExperimentArgument(Builder builder) {
@@ -31,7 +32,8 @@ public class NBodyExperimentArgument implements ExperimentArgument {
         maxVelocityYY = builder.maxVelocityYY;
         mutateNucleotideChance = builder.mutateNucleotideChance;
         fitnessMaxIterations = builder.fitnessMaxIterations;
-        fitnessMaxDistance = builder.fitnessMaxDistance;
+        fitnessMaxDistanceBetweenBodies = builder.fitnessMaxDistanceBetweenBodies;
+        fitnessMinDistanceBetweenBodies = builder.fitnessMinDistanceBetweenBodies;
         fitnessGravityConstant = builder.fitnessGravityConstant;
     }
 
@@ -83,8 +85,12 @@ public class NBodyExperimentArgument implements ExperimentArgument {
         return fitnessMaxIterations;
     }
 
-    public double getFitnessMaxDistance() {
-        return fitnessMaxDistance;
+    public double getFitnessMaxDistanceBetweenBodies() {
+        return fitnessMaxDistanceBetweenBodies;
+    }
+
+    public double getFitnessMinDistanceBetweenBodies() {
+        return fitnessMinDistanceBetweenBodies;
     }
 
     public double getFitnessGravityConstant() {
@@ -104,7 +110,8 @@ public class NBodyExperimentArgument implements ExperimentArgument {
         private double maxVelocityYY;
         private double mutateNucleotideChance;
         private int fitnessMaxIterations;
-        private double fitnessMaxDistance;
+        private double fitnessMaxDistanceBetweenBodies;
+        private double fitnessMinDistanceBetweenBodies;
         private double fitnessGravityConstant;
 
         public Builder() {
@@ -170,8 +177,13 @@ public class NBodyExperimentArgument implements ExperimentArgument {
             return this;
         }
 
-        public Builder withFitnessMaxDistance(double fitnessMaxDistance) {
-            this.fitnessMaxDistance = fitnessMaxDistance;
+        public Builder withFitnessMaxDistanceBetweenBodies(double fitnessMaxDistanceBetweenBodies) {
+            this.fitnessMaxDistanceBetweenBodies = fitnessMaxDistanceBetweenBodies;
+            return this;
+        }
+
+        public Builder withFitnessMinDistanceBetweenBodies(double fitnessMinDistanceBetweenBodies) {
+            this.fitnessMinDistanceBetweenBodies = fitnessMinDistanceBetweenBodies;
             return this;
         }
 

@@ -32,7 +32,7 @@ public class NBodyFitnessAlgorithm implements FitnessAlgorithm<NBodyChromosome, 
             // move the bodies
             bodies = bodies.stream().map(body -> this.updateBodyPosition.updatetBody(body, allBodies, experimentArgument)).collect(Collectors.toList());
 
-            if (this.terminationAlgorithm.isABodyTooFarAway(bodies, experimentArgument)) {
+            if (!this.terminationAlgorithm.areBodiesInCorrectDistanceToEachOther(bodies, experimentArgument)) {
                 // stop -  one of the bodies is too far away
                 break;
             }
