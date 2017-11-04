@@ -18,6 +18,8 @@ public class NBodyExperimentArgument implements ExperimentArgument {
     private final double fitnessMaxDistanceBetweenBodies;
     private final double fitnessMinDistanceBetweenBodies;
     private final double fitnessGravityConstant;
+    private final int terminationMaxIterations;
+    private final double terminationTargetFitness;
 
     private NBodyExperimentArgument(Builder builder) {
         populationSize = builder.populationSize;
@@ -35,6 +37,8 @@ public class NBodyExperimentArgument implements ExperimentArgument {
         fitnessMaxDistanceBetweenBodies = builder.fitnessMaxDistanceBetweenBodies;
         fitnessMinDistanceBetweenBodies = builder.fitnessMinDistanceBetweenBodies;
         fitnessGravityConstant = builder.fitnessGravityConstant;
+        terminationMaxIterations = builder.terminationMaxIterations;
+        terminationTargetFitness = builder.terminationTargetFitness;
     }
 
     public int getPopulationSize() {
@@ -97,6 +101,14 @@ public class NBodyExperimentArgument implements ExperimentArgument {
         return fitnessGravityConstant;
     }
 
+    public int getTerminationMaxIterations() {
+        return terminationMaxIterations;
+    }
+
+    public double getTerminationTargetFitness() {
+        return terminationTargetFitness;
+    }
+
     public static final class Builder {
         private int populationSize;
         private int newPopulationSize;
@@ -113,6 +125,8 @@ public class NBodyExperimentArgument implements ExperimentArgument {
         private double fitnessMaxDistanceBetweenBodies;
         private double fitnessMinDistanceBetweenBodies;
         private double fitnessGravityConstant;
+        private int terminationMaxIterations;
+        private double terminationTargetFitness;
 
         public Builder() {
         }
@@ -189,6 +203,16 @@ public class NBodyExperimentArgument implements ExperimentArgument {
 
         public Builder withFitnessGravityConstant(double fitnessGravityConstant) {
             this.fitnessGravityConstant = fitnessGravityConstant;
+            return this;
+        }
+
+        public Builder withTerminationMaxIterations(int terminationMaxIterations) {
+            this.terminationMaxIterations = terminationMaxIterations;
+            return this;
+        }
+
+        public Builder withTerminationTargetFitness(double terminationTargetFitness) {
+            this.terminationTargetFitness = terminationTargetFitness;
             return this;
         }
 

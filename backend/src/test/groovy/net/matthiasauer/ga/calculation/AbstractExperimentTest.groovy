@@ -1,5 +1,6 @@
 package net.matthiasauer.ga.calculation
 
+import net.matthiasauer.ga.nbody.calculation.NBodyExperimentArgument
 import spock.lang.Specification
 
 class AbstractExperimentTest extends Specification {
@@ -74,7 +75,7 @@ class AbstractExperimentTest extends Specification {
 
         then:
             // check if the experiment can be terminated
-            1 * terminationAlgorithm.terminate(replacedPopulation, experimentArgument) >> true
+            1 * terminationAlgorithm.terminate(replacedPopulation, experimentArgument, 1) >> true
 
         then:
             // make sure that the experiment is terminated
@@ -83,7 +84,44 @@ class AbstractExperimentTest extends Specification {
             0 * crossoverAlgorithm.createOffspring(_ as Collection<ParentChromosomes<Chromosome>>, _ as ExperimentArgument)
             0 * mutationAlgorithm.mutate(_ as Collection<Chromosome>, _ as ExperimentArgument)
             0 * replaceAlgorithm.newPopulation(_ as Collection<Chromosome>, _ as Collection<Chromosome>, _ as ExperimentArgument)
-            0 * terminationAlgorithm.terminate(_ as Collection<Chromosome>, _ as ExperimentArgument)
+            0 * terminationAlgorithm.terminate(_ as Collection<Chromosome>, _ as ExperimentArgument, _ as Integer)
             0 * generateAlgorithm.generate(_ as ExperimentArgument)
+    }
+
+    void "check that the currentIteration argument for the terminate call is correct"() {
+        given:
+            GenerateAlgorithm<Chromosome, ExperimentArgument> generateAlgorithm = Mock(GenerateAlgorithm)
+            FitnessAlgorithm<Chromosome, ExperimentArgument> fitnessAlgorithm = Mock(FitnessAlgorithm)
+            SelectionAlgorithm<Chromosome, ExperimentArgument> selectionAlgorithm = Mock(SelectionAlgorithm)
+            CrossoverAlgorithm<Chromosome, ExperimentArgument> crossoverAlgorithm = Mock(CrossoverAlgorithm)
+            MutationAlgorithm<Chromosome, ExperimentArgument> mutationAlgorithm = Mock(MutationAlgorithm)
+            ReplaceAlgorithm<Chromosome, ExperimentArgument> replaceAlgorithm = Mock(ReplaceAlgorithm)
+            TerminationAlgorithm<Chromosome, ExperimentArgument> terminationAlgorithm = Mock(TerminationAlgorithm)
+
+            AbstractExperiment experiment = new AbstractExperiment(
+                    generateAlgorithm,
+                    fitnessAlgorithm,
+                    selectionAlgorithm,
+                    crossoverAlgorithm,
+                    mutationAlgorithm,
+                    replaceAlgorithm,
+                    terminationAlgorithm) {}
+
+            NBodyExperimentArgument experimentArgument =
+                    new NBodyExperimentArgument.Builder().build()
+        when:
+            experiment.execute(experimentArgument)
+
+        then:
+            1 * terminationAlgorithm.terminate(_, experimentArgument, 1) >> false
+
+        then:
+            1 * terminationAlgorithm.terminate(_, experimentArgument, 2) >> false
+
+        then:
+            1 * terminationAlgorithm.terminate(_, experimentArgument, 3) >> false
+
+        then:
+            1 * terminationAlgorithm.terminate(_, experimentArgument, 4) >> true
     }
 }

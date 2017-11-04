@@ -37,6 +37,8 @@ public abstract class AbstractExperiment<T extends Chromosome<S>, S extends Expe
         // FITNESS - calculate the fitness for the initial population
         population = this.fitnessAlgorithm.calculate(population, experimentArgument);
 
+        int currentIteration = 0;
+
         do {
             // SELECTION - select parents from the population
             Collection<ParentChromosomes<T>> parents = this.selectionAlgorithm.selectParents(population, experimentArgument);
@@ -53,7 +55,10 @@ public abstract class AbstractExperiment<T extends Chromosome<S>, S extends Expe
             // REPLACE - merge the old and new population
             population = this.replaceAlgorithm.newPopulation(population, mutatedChildrenWithFitness, experimentArgument);
 
+            // increase the currentIteration counter
+            currentIteration++;
+
             // FINISH - check the termination criteria
-        } while (!this.terminationAlgorithm.terminate(population, experimentArgument));
+        } while (!this.terminationAlgorithm.terminate(population, experimentArgument, currentIteration));
     }
 }
