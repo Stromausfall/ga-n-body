@@ -46,6 +46,6 @@ public class NBodyFitnessAlgorithm implements FitnessAlgorithm<NBodyChromosome, 
 
     @Override
     public Collection<NBodyChromosome> calculate(Collection<NBodyChromosome> population, NBodyExperimentArgument experimentArgument) {
-        return population.stream().map(chromosome -> evaluate(chromosome, experimentArgument)).collect(Collectors.toList());
+        return population.parallelStream().map(chromosome -> evaluate(chromosome, experimentArgument)).collect(Collectors.toList());
     }
 }
