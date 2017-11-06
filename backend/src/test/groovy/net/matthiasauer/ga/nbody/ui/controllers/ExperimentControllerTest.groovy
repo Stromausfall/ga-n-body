@@ -1,7 +1,8 @@
 package net.matthiasauer.ga.nbody.ui.controllers
 
 import net.matthiasauer.ga.nbody.calculation.NBodyExperimentArgument
-import net.matthiasauer.ga.nbody.ui.services.ExperimentService
+import net.matthiasauer.ga.nbody.ui.services.NBodyExperimentService
+import net.matthiasauer.ga.nbody.ui.services.NBodyExperimentServiceImpl
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.ResultActions
@@ -14,7 +15,7 @@ class ExperimentControllerTest extends Specification {
 
     void "test that the endpoint exists"() {
         given:
-            ExperimentService experimentService = Mock(ExperimentService)
+            NBodyExperimentService experimentService = Mock(NBodyExperimentService)
             ExperimentController classUnderTest = new ExperimentController(experimentService)
             MockMvc mockMvc = MockMvcBuilders.standaloneSetup(classUnderTest).build()
 
@@ -29,10 +30,9 @@ class ExperimentControllerTest extends Specification {
             response.andExpect(MockMvcResultMatchers.status().isOk())
     }
 
-    void "test that the experiment service is called and the experiment id is returned"() {
+    void "test that the experiment service is called with the correct arguments"() {
         given:
-            Integer experimentId = 243
-            ExperimentService experimentService = Mock(ExperimentService)
+            NBodyExperimentService experimentService = Mock(NBodyExperimentService)
             ExperimentController classUnderTest = new ExperimentController(experimentService)
             MockMvc mockMvc = MockMvcBuilders.standaloneSetup(classUnderTest).build()
 
@@ -46,12 +46,9 @@ class ExperimentControllerTest extends Specification {
             1 * experimentService.createExperiment(_ as NBodyExperimentArgument) >> {
                 arguments ->
                     assert arguments[0] instanceof NBodyExperimentArgument
-
-                    return experimentId
             }
 
         then:
-            // make sure that the content is the id returned by the experimentService
-            response.andReturn().getResponse().getContentAsString() == experimentId.toString()
+            response.andExpect(MockMvcResultMatchers.status().isOk())
     }
 }

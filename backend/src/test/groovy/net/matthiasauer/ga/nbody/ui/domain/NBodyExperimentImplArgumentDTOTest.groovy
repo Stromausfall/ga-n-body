@@ -3,7 +3,7 @@ package net.matthiasauer.ga.nbody.ui.domain
 import net.matthiasauer.ga.nbody.calculation.NBodyExperimentArgument
 import spock.lang.Specification
 
-class NBodyExperimentArgumentDTOTest extends Specification {
+class NBodyExperimentImplArgumentDTOTest extends Specification {
     void "ToNBodyExperimentArgument"() {
         given:
             NBodyExperimentArgumentDTO classUnderTest = new NBodyExperimentArgumentDTO()
