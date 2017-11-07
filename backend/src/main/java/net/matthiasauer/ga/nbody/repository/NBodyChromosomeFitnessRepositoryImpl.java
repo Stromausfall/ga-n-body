@@ -8,7 +8,7 @@ public class NBodyChromosomeFitnessRepositoryImpl implements NBodyChromosomeFitn
     private NBodyChromosome fittest = null;
 
     @Override
-    public void add(NBodyChromosome chromosome) {
+    public synchronized void add(NBodyChromosome chromosome) {
         // if there is no fittest yet
         if (this.getFittest() == null) {
             this.fittest = chromosome;
@@ -21,7 +21,7 @@ public class NBodyChromosomeFitnessRepositoryImpl implements NBodyChromosomeFitn
     }
 
     @Override
-    public NBodyChromosome getFittest() {
+    public synchronized NBodyChromosome getFittest() {
         return this.fittest;
     }
 }
