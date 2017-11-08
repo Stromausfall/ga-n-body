@@ -1,4 +1,5 @@
 /* globals __DEV__ */
+import $ from 'jquery';
 import Phaser from 'phaser'
 import Mushroom from '../sprites/Mushroom'
 import WorldModel from '../sprites/WorldModel'
@@ -8,6 +9,36 @@ export default class extends Phaser.State {
   preload () {}
 
   create () {
+
+
+
+
+
+
+
+
+var uname = "asdf"
+var password = "oi"
+    var JSONObject= {"uname":uname, "password":password };
+    var jsonData = JSON.stringify( JSONObject );
+
+    var request = $.ajax({
+      url: "http://localhost:8080/experiment",
+      type: "POST",
+      contentType: 'application/json', // type of data
+      data: jsonData,
+      dataType: "json"
+    });
+
+
+
+
+
+
+
+
+
+
     const bannerText = 'Phaser + ES6 + Webpack'
     let banner = this.add.text(this.world.centerX, this.game.height - 80, bannerText)
     banner.font = 'Bangers'
@@ -28,7 +59,7 @@ export default class extends Phaser.State {
         ["4", {positionX:400, positionY:300, velocityX: 2, velocityY: 2, mass:1}]
       ]})
     game.time.events.repeat(Phaser.Timer.SECOND * 0.05, maxSteps, this.world2.update, this.world2);
-    
+
 
 
 
@@ -56,7 +87,7 @@ export default class extends Phaser.State {
       world2:this.world2,
       id: "4"
     })
-    
+
     this.game.add.existing(this.mushroom1)
     this.game.add.existing(this.mushroom2)
     this.game.add.existing(this.mushroom3)

@@ -63,7 +63,7 @@ class ExperimentControllerTest extends Specification {
             experimentService.getFittestChromosome() >> new NBodyChromosome([])
 
         when:
-            ResultActions response = mockMvc.perform(MockMvcRequestBuilders.get('/experiment/fittest'))
+            ResultActions response = mockMvc.perform(MockMvcRequestBuilders.get('/fittest'))
 
         then:
             // make sure that the endpoint exists
@@ -77,7 +77,7 @@ class ExperimentControllerTest extends Specification {
             MockMvc mockMvc = MockMvcBuilders.standaloneSetup(classUnderTest).build()
 
         when:
-            ResultActions response = mockMvc.perform(MockMvcRequestBuilders.get('/experiment/fittest'))
+            ResultActions response = mockMvc.perform(MockMvcRequestBuilders.get('/fittest'))
 
         then:
             1 * experimentService.getFittestChromosome() >> new NBodyChromosome([], 20.0d)
@@ -100,7 +100,7 @@ class ExperimentControllerTest extends Specification {
             experimentService.getFittestChromosome() >> chromosome
 
         when:
-            ResultActions response = mockMvc.perform(MockMvcRequestBuilders.get('/experiment/fittest'))
+            ResultActions response = mockMvc.perform(MockMvcRequestBuilders.get('/fittest'))
 
         then:
             response.andReturn().getResponse().getContentAsString() == expectedSerializedChromosome

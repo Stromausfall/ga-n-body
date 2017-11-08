@@ -5,14 +5,14 @@ import net.matthiasauer.ga.nbody.calculation.NBodyExperimentArgument;
 import net.matthiasauer.ga.nbody.ui.domain.NBodyChromosomeDTO;
 import net.matthiasauer.ga.nbody.ui.domain.NBodyExperimentArgumentDTO;
 import net.matthiasauer.ga.nbody.ui.services.NBodyExperimentService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class ExperimentController {
+    private final Logger logger = LoggerFactory.getLogger(ExperimentController.class);
 
     private final NBodyExperimentService experimentService;
 
@@ -21,18 +21,21 @@ public class ExperimentController {
         this.experimentService = experimentService;
     }
 
-
-    @RequestMapping(method = RequestMethod.POST, name = "/experiment")
+    @CrossOrigin
+    @RequestMapping(method = RequestMethod.POST, value = "/experiment")
     public void createExperiment(@RequestBody NBodyExperimentArgumentDTO experimentArgumentDTO) {
+        this.logger.info("request to create experiment");
 
         NBodyExperimentArgument experimentArgument = experimentArgumentDTO.toNBodyExperimentArgument();
 
         this.experimentService.createExperiment(experimentArgument);
     }
 
-
-    @RequestMapping(method = RequestMethod.GET, name = "/experiment/fittest")
+    @CrossOrigin
+    @RequestMapping(method = RequestMethod.GET, value = "/fittest")
     public NBodyChromosomeDTO getFittest() {
+        this.logger.info("request for the fittest chromosome");
+
         NBodyChromosome fittest = this.experimentService.getFittestChromosome();
         NBodyChromosomeDTO result = NBodyChromosomeDTO.from(fittest);
 
