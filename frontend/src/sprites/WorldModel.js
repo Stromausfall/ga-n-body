@@ -13,7 +13,7 @@ export default class WorldModel {
 
     for (let m1Key of this.bodies.keys()) {
       let m1 = this.bodies.get(m1Key)
-      
+
       for (let m2Key of this.bodies.keys()) {
         // no need to calculate the force of the body on intself
         if (m1Key == m2Key) {
@@ -34,7 +34,7 @@ export default class WorldModel {
         m1.velocityX += forceX * force
         m1.velocityY += forceY * force
 
-        console.log(force)
+        //console.log(force)
       }
     }
 

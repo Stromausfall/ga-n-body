@@ -13,22 +13,25 @@ export default class extends Phaser.State {
 
 
 
+    $('#clickMe').off('click');
+    $('#clickMe').click(function(){
 
+        var uname = "asdf"
+        var password = "oi"
+        var JSONObject= {"populationSize":234, "uname":uname, "password":password };
+        var jsonData = JSON.stringify( JSONObject );
 
+        var request = $.ajax({
+          url: "http://localhost:8080/experiment",
+          type: "POST",
+          contentType: 'application/json', // type of data
+          data: jsonData,
+          dataType: "json"
+        });
 
-
-var uname = "asdf"
-var password = "oi"
-    var JSONObject= {"uname":uname, "password":password };
-    var jsonData = JSON.stringify( JSONObject );
-
-    var request = $.ajax({
-      url: "http://localhost:8080/experiment",
-      type: "POST",
-      contentType: 'application/json', // type of data
-      data: jsonData,
-      dataType: "json"
+        console.log("asdfasdfasfd !");
     });
+
 
 
 
