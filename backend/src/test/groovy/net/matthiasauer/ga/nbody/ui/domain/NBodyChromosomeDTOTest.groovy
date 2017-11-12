@@ -27,4 +27,9 @@ class NBodyChromosomeDTOTest extends Specification {
             classUnderTest.getAlleles()[1].velocityX == 5
             classUnderTest.getAlleles()[1].velocityY == 6
     }
+
+    void "FromNBodyAllele with null"() {
+        expect:
+            NBodyChromosomeDTO.from(null) == null
+    }
 }

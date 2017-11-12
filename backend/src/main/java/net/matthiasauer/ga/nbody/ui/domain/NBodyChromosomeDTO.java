@@ -26,6 +26,10 @@ public class NBodyChromosomeDTO {
     }
 
     public static NBodyChromosomeDTO from(NBodyChromosome nBodyChromosome) {
+        if (nBodyChromosome == null) {
+            return null;
+        }
+
         NBodyChromosomeDTO dto = new NBodyChromosomeDTO();
         NBodyAlleleDTO[] alleles =
                 nBodyChromosome.getAlleles().stream()
