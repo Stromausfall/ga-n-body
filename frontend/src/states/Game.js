@@ -49,24 +49,33 @@ export default class extends Phaser.State {
     });
   }
 
+  startExperimentUsingFittest() {
+    var self = this;
+
+    $.ajax({
+      // perform a GET on the fittest REST endpoint
+      url: "http://localhost:8080/fittest"
+    }).then(function (data) {
+      // check whether data was retrieved from the endpoint
+      if (data == "") {
+        console.log("no fittest yet - waiting for 1 second");
+
+        // call the function again in one second
+        game.time.events.add(Phaser.Timer.SECOND * 1, self.startExperimentUsingFittest, self);
+      } else {
+        console.log("fittest retrieved");
+        console.log(data);
+      }
+    });
+  }
+
   create() {
+    // install the event to start the experiment on the start experiment button
     this.installListenerOnStartExperiment()
 
-
-
-    $('#test').off('click');
-    $('#test').click(function () {
-      $.ajax({
-        url: "http://localhost:8080/fittest"
-      }).then(function (data) {
-        console.log('fittest [start]')
-        console.log(data)
-        console.log('fittest [end]')
-        //$('.greeting-id').append(data.id);
-        //$('.greeting-content').append(data.content);
-      });
-    });
-
+    // try to retrieve the fittest chromosome to start displaying
+    this.startExperimentUsingFittest();
+    console.log(this);
     /*
     const bannerText = 'Phaser + ES6 + Webpack'
     let banner = this.add.text(this.world.centerX, this.game.height - 80, bannerText)
