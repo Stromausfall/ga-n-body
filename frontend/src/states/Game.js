@@ -1,7 +1,6 @@
 /* globals __DEV__ */
 import $ from 'jquery';
 import Phaser from 'phaser'
-import Mushroom from '../sprites/Mushroom'
 import WorldModel from '../sprites/WorldModel'
 
 export default class extends Phaser.State {
@@ -63,7 +62,7 @@ export default class extends Phaser.State {
         // call the function again in one second
         game.time.events.add(Phaser.Timer.SECOND * 1, self.startExperimentUsingFittest, self);
       } else {
-        console.log("fittest retrieved");
+        console.log("fittest retrieved - starting simulation");
         console.log(data);
       }
     });
@@ -88,74 +87,40 @@ export default class extends Phaser.State {
     */
 
     // create the world object and call the foo method maxSteps times
-    let maxSteps = 25000
-    this.world2 = new WorldModel({
-      bodies: [
-        ["1", {
-          positionX: 350,
-          positionY: 50,
-          velocityX: -2,
-          velocityY: 2,
-          mass: 1
-        }],
-        ["2", {
-          positionX: 150,
-          positionY: 300,
-          velocityX: 2,
-          velocityY: -2,
-          mass: 2
-        }],
-        ["3", {
-          positionX: 40,
-          positionY: 50,
-          velocityX: -2,
-          velocityY: -2,
-          mass: 3
-        }],
-        ["4", {
-          positionX: 400,
-          positionY: 300,
-          velocityX: 2,
-          velocityY: 2,
-          mass: 1
-        }]
-      ]
-    })
-
-    game.time.events.repeat(Phaser.Timer.SECOND * 0.05, maxSteps, this.world2.update, this.world2);
-
-
-
-
-    this.mushroom1 = new Mushroom({
-      game: this.game,
-      asset: 'mushroom',
-      world2: this.world2,
-      id: "1"
-    })
-    this.mushroom2 = new Mushroom({
-      game: this.game,
-      asset: 'mushroom',
-      world2: this.world2,
-      id: "2"
-    })
-    this.mushroom3 = new Mushroom({
-      game: this.game,
-      asset: 'mushroom',
-      world2: this.world2,
-      id: "3"
-    })
-    this.mushroom4 = new Mushroom({
-      game: this.game,
-      asset: 'mushroom',
-      world2: this.world2,
-      id: "4"
-    })
-
-    this.game.add.existing(this.mushroom1)
-    this.game.add.existing(this.mushroom2)
-    this.game.add.existing(this.mushroom3)
-    this.game.add.existing(this.mushroom4)
+    this.world2 = new WorldModel(
+      this.game, {
+        bodies: [
+          ["1", {
+            positionX: 350,
+            positionY: 50,
+            velocityX: -2,
+            velocityY: 2,
+            mass: 1
+          }],
+          ["2", {
+            positionX: 150,
+            positionY: 300,
+            velocityX: 2,
+            velocityY: -2,
+            mass: 2
+          }],
+          ["3", {
+            positionX: 40,
+            positionY: 50,
+            velocityX: -2,
+            velocityY: -2,
+            mass: 3
+          }],
+          ["4", {
+            positionX: 400,
+            positionY: 300,
+            velocityX: 2,
+            velocityY: 2,
+            mass: 1
+          }]
+        ]
+      });
+      this.world2.initialize();
   }
 
 

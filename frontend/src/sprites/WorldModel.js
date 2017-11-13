@@ -1,6 +1,45 @@
+import Mushroom from '../sprites/Mushroom'
+
 export default class WorldModel {
-  constructor({bodies}) {
-    this.bodies = new Map(bodies)
+  constructor(game, {bodies}) {
+    this.bodies = new Map(bodies);
+    this.game = game;
+  }
+
+  initialize() {    
+    this.mushroom1 = new Mushroom({
+      game: this.game,
+      asset: 'mushroom',
+      world2: this,
+      id: "1"
+    })
+    this.mushroom2 = new Mushroom({
+      game: this.game,
+      asset: 'mushroom',
+      world2: this,
+      id: "2"
+    })
+    this.mushroom3 = new Mushroom({
+      game: this.game,
+      asset: 'mushroom',
+      world2: this,
+      id: "3"
+    })
+    this.mushroom4 = new Mushroom({
+      game: this.game,
+      asset: 'mushroom',
+      world2: this,
+      id: "4"
+    })
+
+    this.game.add.existing(this.mushroom1)
+    this.game.add.existing(this.mushroom2)
+    this.game.add.existing(this.mushroom3)
+    this.game.add.existing(this.mushroom4)
+
+    var maxSteps = 25000;
+    
+    this.game.time.events.repeat(Phaser.Timer.SECOND * 0.05, maxSteps, this.update, this);
   }
 
   getPosition(id) {
