@@ -1,6 +1,7 @@
 package net.matthiasauer.ga.nbody.calculation
 
 import net.matthiasauer.ga.nbody.repositories.NBodyChromosomeFitnessRepository
+import net.matthiasauer.ga.nbody.repositories.NBodyExperimentInformationRepository
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -9,6 +10,7 @@ class NBodyTerminationAlgorithmTest extends Specification {
     void "check that if the maximum amount of iterations is reached - the algorithm is stopped"() {
         given:
             NBodyChromosomeFitnessRepository repository = Mock(NBodyChromosomeFitnessRepository)
+            NBodyExperimentInformationRepository experimentInformationRepository = Mock(NBodyExperimentInformationRepository)
             NBodyExperimentArgument experimentArgument =
                     new NBodyExperimentArgument.Builder()
                             .withTerminationMaxIterations(100)
@@ -19,7 +21,7 @@ class NBodyTerminationAlgorithmTest extends Specification {
                     new NBodyChromosome([], 0.0)
             ]
             NBodyTerminationAlgorithm classUnderTest =
-                    new NBodyTerminationAlgorithm(repository)
+                    new NBodyTerminationAlgorithm(repository, experimentInformationRepository)
 
         when:
             boolean result = classUnderTest.terminate(population, experimentArgument, iteration)
@@ -40,6 +42,7 @@ class NBodyTerminationAlgorithmTest extends Specification {
     void "check that if a chromosome has reached the required fitness - the algorithm is terminated"() {
         given:
             NBodyChromosomeFitnessRepository repository = Mock(NBodyChromosomeFitnessRepository)
+            NBodyExperimentInformationRepository experimentInformationRepository = Mock(NBodyExperimentInformationRepository)
             NBodyExperimentArgument experimentArgument =
                     new NBodyExperimentArgument.Builder()
                             .withTerminationMaxIterations(100)
@@ -50,7 +53,7 @@ class NBodyTerminationAlgorithmTest extends Specification {
                     new NBodyChromosome([], 0.0)
             ]
             NBodyTerminationAlgorithm classUnderTest =
-                    new NBodyTerminationAlgorithm(repository)
+                    new NBodyTerminationAlgorithm(repository, experimentInformationRepository)
 
         when:
             boolean result = classUnderTest.terminate(population, experimentArgument, 2)
@@ -72,6 +75,7 @@ class NBodyTerminationAlgorithmTest extends Specification {
     void "check that all chromosomes are added to the nbodyChromosomeFitnessRepository"() {
         given:
             NBodyChromosomeFitnessRepository repository = Mock(NBodyChromosomeFitnessRepository)
+            NBodyExperimentInformationRepository experimentInformationRepository = Mock(NBodyExperimentInformationRepository)
             NBodyExperimentArgument experimentArgument =
                     new NBodyExperimentArgument.Builder()
                             .withTerminationMaxIterations(100)
@@ -82,7 +86,7 @@ class NBodyTerminationAlgorithmTest extends Specification {
                     new NBodyChromosome([], 0.0)
             ]
             NBodyTerminationAlgorithm classUnderTest =
-                    new NBodyTerminationAlgorithm(repository)
+                    new NBodyTerminationAlgorithm(repository, experimentInformationRepository)
 
         when:
             classUnderTest.terminate(population, experimentArgument, 2)
@@ -90,11 +94,13 @@ class NBodyTerminationAlgorithmTest extends Specification {
         then:
             1 * repository.add(population[0])
             1 * repository.add(population[1])
+            1 * experimentInformationRepository.store(experimentArgument, 2)
     }
 
     void "check that all chromosomes are added to the nbodyChromosomeFitnessRepository (even if we have reached the max iteration)"() {
         given:
             NBodyChromosomeFitnessRepository repository = Mock(NBodyChromosomeFitnessRepository)
+            NBodyExperimentInformationRepository experimentInformationRepository = Mock(NBodyExperimentInformationRepository)
             NBodyExperimentArgument experimentArgument =
                     new NBodyExperimentArgument.Builder()
                             .withTerminationMaxIterations(100)
@@ -105,7 +111,7 @@ class NBodyTerminationAlgorithmTest extends Specification {
                     new NBodyChromosome([], 0.0)
             ]
             NBodyTerminationAlgorithm classUnderTest =
-                    new NBodyTerminationAlgorithm(repository)
+                    new NBodyTerminationAlgorithm(repository, experimentInformationRepository)
 
         when:
             classUnderTest.terminate(population, experimentArgument, 200)
@@ -113,5 +119,6 @@ class NBodyTerminationAlgorithmTest extends Specification {
         then:
             1 * repository.add(population[0])
             1 * repository.add(population[1])
+            1 * experimentInformationRepository.store(experimentArgument, 200)
     }
 }
