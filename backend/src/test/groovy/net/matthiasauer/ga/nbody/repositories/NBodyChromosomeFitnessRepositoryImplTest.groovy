@@ -1,4 +1,4 @@
-package net.matthiasauer.ga.nbody.repository
+package net.matthiasauer.ga.nbody.repositories
 
 import net.matthiasauer.ga.nbody.calculation.NBodyChromosome
 import spock.lang.Specification

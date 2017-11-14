@@ -1,7 +1,7 @@
 package net.matthiasauer.ga.nbody.calculation;
 
 import net.matthiasauer.ga.calculation.TerminationAlgorithm;
-import net.matthiasauer.ga.nbody.repository.NBodyChromosomeFitnessRepository;
+import net.matthiasauer.ga.nbody.repositories.NBodyChromosomeFitnessRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

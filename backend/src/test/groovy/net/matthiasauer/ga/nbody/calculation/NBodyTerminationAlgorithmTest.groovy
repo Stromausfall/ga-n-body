@@ -1,6 +1,6 @@
 package net.matthiasauer.ga.nbody.calculation
 
-import net.matthiasauer.ga.nbody.repository.NBodyChromosomeFitnessRepository
+import net.matthiasauer.ga.nbody.repositories.NBodyChromosomeFitnessRepository
 import spock.lang.Specification
 import spock.lang.Unroll
 

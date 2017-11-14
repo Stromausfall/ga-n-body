@@ -4,6 +4,7 @@ import net.matthiasauer.ga.nbody.calculation.NBodyChromosome;
 import net.matthiasauer.ga.nbody.calculation.NBodyExperimentArgument;
 import net.matthiasauer.ga.nbody.ui.domain.NBodyChromosomeDTO;
 import net.matthiasauer.ga.nbody.ui.domain.NBodyExperimentArgumentDTO;
+import net.matthiasauer.ga.nbody.ui.domain.NBodyIterationInformationDTO;
 import net.matthiasauer.ga.nbody.ui.services.NBodyExperimentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,13 +33,10 @@ public class ExperimentController {
     }
 
     @CrossOrigin
-    @RequestMapping(method = RequestMethod.GET, value = "/fittest")
-    public NBodyChromosomeDTO getFittest() {
-        this.logger.info("request for the fittest chromosome");
+    @RequestMapping(method = RequestMethod.GET, value = "/experiment/iteration")
+    public NBodyIterationInformationDTO getCurrentIteration() {
+        this.logger.info("request for information about the current iteration");
 
-        NBodyChromosome fittest = this.experimentService.getFittestChromosome();
-        NBodyChromosomeDTO result = NBodyChromosomeDTO.from(fittest);
-
-        return result;
+        return this.experimentService.getCurrentIteration();
     }
 }

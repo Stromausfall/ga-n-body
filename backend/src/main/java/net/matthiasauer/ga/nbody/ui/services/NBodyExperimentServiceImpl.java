@@ -3,7 +3,12 @@ package net.matthiasauer.ga.nbody.ui.services;
 import net.matthiasauer.ga.nbody.calculation.NBodyChromosome;
 import net.matthiasauer.ga.nbody.calculation.NBodyExperiment;
 import net.matthiasauer.ga.nbody.calculation.NBodyExperimentArgument;
-import net.matthiasauer.ga.nbody.repository.NBodyChromosomeFitnessRepository;
+import net.matthiasauer.ga.nbody.repositories.NBodyChromosomeFitnessRepository;
+import net.matthiasauer.ga.nbody.repositories.NBodyExperimentInformation;
+import net.matthiasauer.ga.nbody.repositories.NBodyExperimentInformationRepository;
+import net.matthiasauer.ga.nbody.ui.domain.NBodyChromosomeDTO;
+import net.matthiasauer.ga.nbody.ui.domain.NBodyExperimentArgumentDTO;
+import net.matthiasauer.ga.nbody.ui.domain.NBodyIterationInformationDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -15,11 +20,13 @@ public class NBodyExperimentServiceImpl implements NBodyExperimentService {
     private final NBodyExperiment experiment;
     private final ExecutorService executorService;
     private final NBodyChromosomeFitnessRepository fitnessRepository;
+    private final NBodyExperimentInformationRepository experimentInformationRepository;
 
     @Autowired
-    public NBodyExperimentServiceImpl(NBodyExperiment experiment, NBodyChromosomeFitnessRepository fitnessRepository) {
+    public NBodyExperimentServiceImpl(NBodyExperiment experiment, NBodyChromosomeFitnessRepository fitnessRepository, NBodyExperimentInformationRepository experimentInformationRepository) {
         this.experiment = experiment;
         this.fitnessRepository = fitnessRepository;
+        this.experimentInformationRepository = experimentInformationRepository;
         this.executorService =
                 Executors.newSingleThreadExecutor();
     }
@@ -31,7 +38,19 @@ public class NBodyExperimentServiceImpl implements NBodyExperimentService {
     }
 
     @Override
-    public NBodyChromosome getFittestChromosome() {
-        return this.fitnessRepository.getFittest();
+    public NBodyIterationInformationDTO getCurrentIteration() {
+        NBodyExperimentInformation experimentInformation = this.experimentInformationRepository.getLatest();
+        NBodyChromosome fittest = this.fitnessRepository.getFittest();
+
+        if ((experimentInformation == null) || (fittest == null)) {
+            return null;
+        }
+
+        NBodyIterationInformationDTO result = new NBodyIterationInformationDTO();
+        result.setFittest(NBodyChromosomeDTO.from(fittest));
+        result.setIteration(experimentInformation.getCurrentIteration());
+        result.setExperimentArgument(NBodyExperimentArgumentDTO.from(experimentInformation.getNBodyExperimentArgument()));
+
+        return result;
     }
 }
