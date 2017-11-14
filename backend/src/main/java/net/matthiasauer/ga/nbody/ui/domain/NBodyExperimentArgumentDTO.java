@@ -178,4 +178,27 @@ public class NBodyExperimentArgumentDTO {
                 .withTerminationTargetFitness(this.getTerminationTargetFitness())
                 .build();
     }
+
+    public static NBodyExperimentArgumentDTO from(NBodyExperimentArgument experimentArgument) {
+        NBodyExperimentArgumentDTO result = new NBodyExperimentArgumentDTO();
+        result.setAllelesPerChromosome(experimentArgument.getAllelesPerChromosome());
+        result.setCrossOverReturnsParentLikelihood(experimentArgument.getCrossOverReturnsParentLikelihood());
+        result.setFitnessGravityConstant(experimentArgument.getFitnessGravityConstant());
+        result.setFitnessMaxDistanceBetweenBodies(experimentArgument.getFitnessMaxDistanceBetweenBodies());
+        result.setFitnessMaxIterations(experimentArgument.getFitnessMaxIterations());
+        result.setFitnessMinDistanceBetweenBodies(experimentArgument.getFitnessMinDistanceBetweenBodies());
+        result.setMaxMass(experimentArgument.getMaxMass());
+        result.setMinMass(experimentArgument.getMinMass());
+        result.setMaxPosXY(experimentArgument.getMaxPosXY());
+        result.setMaxVelocityYY(experimentArgument.getMaxVelocityYY());
+        result.setMinPosXY(experimentArgument.getMinPosXY());
+        result.setMinVelocityXY(experimentArgument.getMinVelocityXY());
+        result.setMutateNucleotideChance(experimentArgument.getMutateNucleotideChance());
+        result.setNewPopulationSize(experimentArgument.getNewPopulationSize());
+        result.setPopulationSize(experimentArgument.getPopulationSize());
+        result.setTerminationMaxIterations(experimentArgument.getTerminationMaxIterations());
+        result.setTerminationTargetFitness(experimentArgument.getTerminationTargetFitness());
+
+        return result;
+    }
 }
