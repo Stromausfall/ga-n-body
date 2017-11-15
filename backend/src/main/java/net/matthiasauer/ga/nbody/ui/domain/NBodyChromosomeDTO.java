@@ -1,6 +1,5 @@
 package net.matthiasauer.ga.nbody.ui.domain;
 
-import net.matthiasauer.ga.nbody.calculation.NBodyAllele;
 import net.matthiasauer.ga.nbody.calculation.NBodyChromosome;
 
 import java.util.stream.Collectors;

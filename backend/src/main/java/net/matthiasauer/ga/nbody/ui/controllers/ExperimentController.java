@@ -1,8 +1,6 @@
 package net.matthiasauer.ga.nbody.ui.controllers;
 
-import net.matthiasauer.ga.nbody.calculation.NBodyChromosome;
 import net.matthiasauer.ga.nbody.calculation.NBodyExperimentArgument;
-import net.matthiasauer.ga.nbody.ui.domain.NBodyChromosomeDTO;
 import net.matthiasauer.ga.nbody.ui.domain.NBodyExperimentArgumentDTO;
 import net.matthiasauer.ga.nbody.ui.domain.NBodyIterationInformationDTO;
 import net.matthiasauer.ga.nbody.ui.services.NBodyExperimentService;

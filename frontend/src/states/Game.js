@@ -53,7 +53,7 @@ export default class extends Phaser.State {
 
     $.ajax({
       // perform a GET on the fittest REST endpoint
-      url: "http://localhost:8080/fittest"
+      url: "http://localhost:8080/experiment/iteration"
     }).then(function (data) {
       // check whether data was retrieved from the endpoint
       if (data == "") {
@@ -63,7 +63,7 @@ export default class extends Phaser.State {
         game.time.events.add(Phaser.Timer.SECOND * 1, self.startExperimentUsingFittest, self);
       } else {
         console.log("fittest retrieved - starting simulation");
-        console.log(data);
+        self.worldModel.updateData(data)
       }
     });
   }
@@ -74,54 +74,8 @@ export default class extends Phaser.State {
 
     // try to retrieve the fittest chromosome to start displaying
     this.startExperimentUsingFittest();
-    console.log(this);
-    /*
-    const bannerText = 'Phaser + ES6 + Webpack'
-    let banner = this.add.text(this.world.centerX, this.game.height - 80, bannerText)
-    banner.font = 'Bangers'
-    banner.padding.set(10, 16)
-    banner.fontSize = 40
-    banner.fill = '#77BFA3'
-    banner.smoothed = false
-    banner.anchor.setTo(0.5)
-    */
 
-    // create the world object and call the foo method maxSteps times
-    this.world2 = new WorldModel(
-      this.game, {
-        bodies: [
-          ["1", {
-            positionX: 350,
-            positionY: 50,
-            velocityX: -2,
-            velocityY: 2,
-            mass: 1
-          }],
-          ["2", {
-            positionX: 150,
-            positionY: 300,
-            velocityX: 2,
-            velocityY: -2,
-            mass: 2
-          }],
-          ["3", {
-            positionX: 40,
-            positionY: 50,
-            velocityX: -2,
-            velocityY: -2,
-            mass: 3
-          }],
-          ["4", {
-            positionX: 400,
-            positionY: 300,
-            velocityX: 2,
-            velocityY: 2,
-            mass: 1
-          }]
-        ]
-      });
-      this.world2.initialize();
+    // create the world model
+    this.worldModel = new WorldModel(this.game);
   }
-
-
 }

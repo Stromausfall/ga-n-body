@@ -1,68 +1,90 @@
 import Mushroom from '../sprites/Mushroom'
 
 export default class WorldModel {
-  constructor(game, {bodies}) {
-    this.bodies = new Map(bodies);
+  constructor(game) {
+    this.bodies = null;
     this.game = game;
+
+    this.initialize()
   }
 
-  initialize() {    
-    this.mushroom1 = new Mushroom({
-      game: this.game,
-      asset: 'mushroom',
-      world2: this,
-      id: "1"
-    })
-    this.mushroom2 = new Mushroom({
-      game: this.game,
-      asset: 'mushroom',
-      world2: this,
-      id: "2"
-    })
-    this.mushroom3 = new Mushroom({
-      game: this.game,
-      asset: 'mushroom',
-      world2: this,
-      id: "3"
-    })
-    this.mushroom4 = new Mushroom({
-      game: this.game,
-      asset: 'mushroom',
-      world2: this,
-      id: "4"
-    })
-
-    this.game.add.existing(this.mushroom1)
-    this.game.add.existing(this.mushroom2)
-    this.game.add.existing(this.mushroom3)
-    this.game.add.existing(this.mushroom4)
-
-    var maxSteps = 25000;
-    
-    this.game.time.events.repeat(Phaser.Timer.SECOND * 0.05, maxSteps, this.update, this);
+  initialize() {
+    // add the banner
+    this.addBanner()
   }
 
   getPosition(id) {
-    let position = this.bodies.get(id)
+    let position = this.bodies[id]
 
-    return {x:position.positionX, y:position.positionY}
+    return {
+      x: position.posX,
+      y: position.posY
+    }
   }
 
-  update() {
+  addBanner() {
+    this.banner = this.game.add.text(this.game.width / 2, this.game.height - 20, "")
+    this.banner.font = 'Bangers'
+    this.banner.padding.set(10, 16)
+    this.banner.fontSize = 40
+    this.banner.fill = '#77BFA3'
+    this.banner.smoothed = false
+    this.banner.anchor.setTo(0.5)
+  }
 
-    for (let m1Key of this.bodies.keys()) {
-      let m1 = this.bodies.get(m1Key)
+  updateBannerText(iteration, fitness) {
+    this.banner.text = "iteration " + iteration + ", fitness: " + fitness
+  }
 
-      for (let m2Key of this.bodies.keys()) {
+
+  updateData(iteration) {
+    this.updateBannerText(iteration.iteration, iteration.fittest.fitness);
+
+    this.bodies = iteration.fittest.alleles;
+    this.experimentArgument = iteration.experimentArgument;
+
+    this.createBodies();
+
+    // update body positions
+    this.game.time.events.repeat(Phaser.Timer.SECOND * 0.05, iteration.fittest.fitness, this.updateBodies, this);
+  }
+
+  createBodies() {
+    this.bodySprites = [];
+    let id = 0;
+
+    for (let body of this.bodies) {
+      // create the sprite   
+      let mushroom = new Mushroom({
+        game: this.game,
+        asset: 'mushroom',
+        worldModel: this,
+        id: id
+      })
+
+      // add it tot the game
+      this.game.add.existing(mushroom);
+
+      // increase the id for the next body
+      id += 1;
+    }
+  }
+
+  updateBodies() {
+    if (this.bodies == null) {
+      return;
+    }
+
+    for (let m1 of this.bodies) {
+
+      for (let m2 of this.bodies) {
         // no need to calculate the force of the body on intself
-        if (m1Key == m2Key) {
+        if (m1 == m2) {
           continue
         }
 
-        let m2 = this.bodies.get(m2Key)
-
-        let forceX = m2.positionX - m1.positionX
-        let forceY = m2.positionY - m1.positionY
+        let forceX = m2.posX - m1.posX
+        let forceY = m2.posY - m1.posY
 
         let r = Math.sqrt(
           Math.pow(forceX, 2) + Math.pow(forceY, 2))
@@ -72,16 +94,12 @@ export default class WorldModel {
         // apply the force
         m1.velocityX += forceX * force
         m1.velocityY += forceY * force
-
-        //console.log(force)
       }
     }
 
-    for (let key of this.bodies.keys()) {
-      let body = this.bodies.get(key)
-
-      body.positionX += body.velocityX;
-      body.positionY += body.velocityY;
+    for (let body of this.bodies) {
+      body.posX += body.velocityX;
+      body.posY += body.velocityY;
     }
   }
 }
