@@ -18,7 +18,7 @@ class NBodyExperimentInformationRepositoryImplTest extends Specification {
     void "test that stored data can be retrieved"() {
         given:
             NBodyExperimentInformationRepository classUnderTest = new NBodyExperimentInformationRepositoryImpl()
-            NBodyExperimentArgument experimentArgument = new NBodyExperimentArgument.Builder().build();
+            NBodyExperimentArgument experimentArgument = new NBodyExperimentArgument.Builder().build()
 
         when:
             classUnderTest.store(experimentArgument, 2)
@@ -32,8 +32,8 @@ class NBodyExperimentInformationRepositoryImplTest extends Specification {
     void "test that stored data can be updated"() {
         given:
             NBodyExperimentInformationRepository classUnderTest = new NBodyExperimentInformationRepositoryImpl()
-            NBodyExperimentArgument experimentArgument = new NBodyExperimentArgument.Builder().build();
-            NBodyExperimentArgument experimentArgument2 = new NBodyExperimentArgument.Builder().build();
+            NBodyExperimentArgument experimentArgument = new NBodyExperimentArgument.Builder().build()
+            NBodyExperimentArgument experimentArgument2 = new NBodyExperimentArgument.Builder().build()
 
         when:
             classUnderTest.store(experimentArgument, 2)
@@ -44,4 +44,19 @@ class NBodyExperimentInformationRepositoryImplTest extends Specification {
             result.getCurrentIteration() == 3
             result.getNBodyExperimentArgument() == experimentArgument2
     }
+
+    void "test that clear removes all data from the repository"() {
+        given:
+            NBodyExperimentInformationRepository classUnderTest = new NBodyExperimentInformationRepositoryImpl()
+            NBodyExperimentArgument experimentArgument = new NBodyExperimentArgument.Builder().build()
+            classUnderTest.store(experimentArgument, 2)
+
+        when:
+            classUnderTest.clear()
+            NBodyExperimentInformation result = classUnderTest.getLatest()
+
+        then:
+            result == null
+    }
+
 }

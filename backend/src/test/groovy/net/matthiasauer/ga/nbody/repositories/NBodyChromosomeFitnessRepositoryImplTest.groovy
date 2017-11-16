@@ -43,4 +43,31 @@ class NBodyChromosomeFitnessRepositoryImplTest extends Specification {
         then:
             classUnderTest.getFittest() == chromosomeFitness50
     }
+
+    void "test that clearing the  repository removes all informatinon"() {
+        given:
+            NBodyChromosome chromosomeFitness10 = new NBodyChromosome([], 10)
+            NBodyChromosome chromosomeFitness20 = new NBodyChromosome([], 20)
+            NBodyChromosomeFitnessRepository classUnderTest =
+                    new NBodyChromosomeFitnessRepositoryImpl()
+            classUnderTest.add(chromosomeFitness20)
+
+        when:
+            classUnderTest.add(chromosomeFitness20)
+
+        then:
+            classUnderTest.getFittest() == chromosomeFitness20
+
+        when:
+            classUnderTest.clear()
+
+        then:
+            classUnderTest.getFittest() == null
+
+        when:
+            classUnderTest.add(chromosomeFitness10)
+
+        then:
+            classUnderTest.getFittest() == chromosomeFitness10
+    }
 }

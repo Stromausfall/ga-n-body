@@ -12,7 +12,7 @@ import spock.lang.Specification
 import spock.lang.Unroll
 
 class NBodyExperimentServiceImplTest extends Specification {
-    def "test that the createService method starts an experiment with the given arguments"() {
+    def "test that the createService method starts an experiment with the given arguments (and clears the repositories)"() {
         given:
             NBodyExperiment experiment = Mock(NBodyExperiment)
             ExperimentArgument experimentArgument = new NBodyExperimentArgument.Builder().build()
@@ -25,6 +25,9 @@ class NBodyExperimentServiceImplTest extends Specification {
             // give some time for the executor to start the experiment
             Thread.sleep(100)
 
+        then:
+            1 * fitnessRepository.clear()
+            1 * experimentInformationRepository.clear()
         then:
             1 * experiment.execute(experimentArgument)
     }

@@ -43,7 +43,7 @@ export default class extends Phaser.State {
       });
 
       // disable all input elements inside the startExperimentDiv div
-      $("#startExperimentDiv :input").prop("disabled", true);
+      //$("#startExperimentDiv :input").prop("disabled", true);
 
     });
   }
@@ -64,6 +64,16 @@ export default class extends Phaser.State {
       } else {
         console.log("fittest retrieved - starting simulation");
         self.worldModel.updateData(data)
+
+
+        // get the fittest after the simulation has finished !
+        let timeBeforeGettingNewFittest = Phaser.Timer.SECOND * 0.05 * (data.fittest.fitness + 1);
+
+        if (timeBeforeGettingNewFittest < Phaser.Timer.SECOND) {
+          timeBeforeGettingNewFittest = Phaser.Timer.SECOND
+        }
+
+        game.time.events.add(timeBeforeGettingNewFittest, self.startExperimentUsingFittest, self);
       }
     });
   }

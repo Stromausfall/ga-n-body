@@ -24,4 +24,9 @@ public class NBodyChromosomeFitnessRepositoryImpl implements NBodyChromosomeFitn
     public synchronized NBodyChromosome getFittest() {
         return this.fittest;
     }
+
+    @Override
+    public synchronized void clear() {
+        this.fittest = null;
+    }
 }

@@ -31,10 +31,19 @@ public class NBodyExperimentServiceImpl implements NBodyExperimentService {
                 Executors.newSingleThreadExecutor();
     }
 
+    private void startExperiment(NBodyExperimentArgument experimentArgument) {
+        // first clear all repositories
+        this.fitnessRepository.clear();
+        this.experimentInformationRepository.clear();
+
+        // then start the experiment
+        this.experiment.execute(experimentArgument);
+    }
+
     @Override
     public synchronized void createExperiment(NBodyExperimentArgument experimentArgument) {
         // start the experiment on the thread
-        this.executorService.submit(() -> this.experiment.execute(experimentArgument));
+        this.executorService.submit(() -> this.startExperiment(experimentArgument));
     }
 
     @Override

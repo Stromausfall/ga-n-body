@@ -22,4 +22,9 @@ public class NBodyExperimentInformationRepositoryImpl implements NBodyExperiment
     public NBodyExperimentInformation getLatest() {
         return this.value.get();
     }
+
+    @Override
+    public void clear() {
+        this.value.set(null);
+    }
 }

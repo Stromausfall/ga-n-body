@@ -4,6 +4,7 @@ export default class WorldModel {
   constructor(game) {
     this.bodies = null;
     this.game = game;
+    this.sprites = [];
 
     this.initialize()
   }
@@ -49,8 +50,18 @@ export default class WorldModel {
     this.game.time.events.repeat(Phaser.Timer.SECOND * 0.05, iteration.fittest.fitness, this.updateBodies, this);
   }
 
+  removePreviousSprites() {
+    // remove old bodies
+    for (let sprite of this.sprites) {
+      sprite.body = null;
+      sprite.destroy();
+    }
+    this.sprites = [];
+  }
+
   createBodies() {
-    this.bodySprites = [];
+    this.removePreviousSprites();
+
     let id = 0;
 
     for (let body of this.bodies) {
@@ -64,6 +75,9 @@ export default class WorldModel {
 
       // add it tot the game
       this.game.add.existing(mushroom);
+
+      // remember the sprite
+      this.sprites.push(mushroom);
 
       // increase the id for the next body
       id += 1;
