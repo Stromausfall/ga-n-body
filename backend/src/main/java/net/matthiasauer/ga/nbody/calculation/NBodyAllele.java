@@ -1,8 +1,9 @@
 package net.matthiasauer.ga.nbody.calculation;
 
+import net.matthiasauer.ga.calculation.Allele;
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 
-public class NBodyAllele {
+public class NBodyAllele implements Allele {
     private final double posX;
     private final double posY;
     private final double mass;

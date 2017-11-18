@@ -1,15 +1,14 @@
 package net.matthiasauer.ga.nbody.calculation
 
-import net.matthiasauer.ga.nbody.ui.domain.NBodyAlleleDTO
 import spock.lang.Specification
 
-class NBodyFitnessAlgorithmTest extends Specification {
+class NBodyFitnessAlgorithmImplTest extends Specification {
 
     void "test one iteration"() {
         given:
             NBodyFitnessTerminationAlgorithm terminationAlgorithm = Mock(NBodyFitnessTerminationAlgorithm)
             NBodyFitnessUpdateBodyAlgorithm updateBodyAlgorithm = Mock(NBodyFitnessUpdateBodyAlgorithm)
-            NBodyFitnessAlgorithm classUnderTest = new NBodyFitnessAlgorithm(updateBodyAlgorithm, terminationAlgorithm)
+            NBodyFitnessAlgorithmImpl classUnderTest = new NBodyFitnessAlgorithmImpl(updateBodyAlgorithm, terminationAlgorithm)
             NBodyAllele allele1 = new NBodyAllele(100, 100, 1, 2.5, 2.5)
             NBodyAllele allele2 = new NBodyAllele(0, 0, 1, 2.5, 2.5)
             Collection<NBodyChromosome> population = [
@@ -38,7 +37,7 @@ class NBodyFitnessAlgorithmTest extends Specification {
         given:
             NBodyFitnessTerminationAlgorithm terminationAlgorithm = Mock(NBodyFitnessTerminationAlgorithm)
             NBodyFitnessUpdateBodyAlgorithm updateBodyAlgorithm = Mock(NBodyFitnessUpdateBodyAlgorithm)
-            NBodyFitnessAlgorithm classUnderTest = new NBodyFitnessAlgorithm(updateBodyAlgorithm, terminationAlgorithm)
+            NBodyFitnessAlgorithmImpl classUnderTest = new NBodyFitnessAlgorithmImpl(updateBodyAlgorithm, terminationAlgorithm)
             NBodyAllele allele1 = new NBodyAllele(100, 100, 1, 2.5, 2.5)
             NBodyAllele allele2 = new NBodyAllele(0, 0, 1, 2.5, 2.5)
             Collection<NBodyChromosome> population = [
@@ -85,7 +84,7 @@ class NBodyFitnessAlgorithmTest extends Specification {
         given:
             NBodyFitnessTerminationAlgorithm terminationAlgorithm = Mock(NBodyFitnessTerminationAlgorithm)
             NBodyFitnessUpdateBodyAlgorithm updateBodyAlgorithm = Mock(NBodyFitnessUpdateBodyAlgorithm)
-            NBodyFitnessAlgorithm classUnderTest = new NBodyFitnessAlgorithm(updateBodyAlgorithm, terminationAlgorithm)
+            NBodyFitnessAlgorithmImpl classUnderTest = new NBodyFitnessAlgorithmImpl(updateBodyAlgorithm, terminationAlgorithm)
             NBodyAllele allele1 = new NBodyAllele(100, 100, 1, 2.5, 2.5)
             NBodyAllele allele2 = new NBodyAllele(0, 0, 1, 2.5, 2.5)
             NBodyChromosome chromosome = new NBodyChromosome([allele1, allele2])

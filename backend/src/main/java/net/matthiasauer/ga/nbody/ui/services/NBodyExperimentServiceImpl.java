@@ -1,17 +1,16 @@
 package net.matthiasauer.ga.nbody.ui.services;
 
-import net.matthiasauer.ga.nbody.calculation.NBodyChromosome;
-import net.matthiasauer.ga.nbody.calculation.NBodyExperiment;
-import net.matthiasauer.ga.nbody.calculation.NBodyExperimentArgument;
+import net.matthiasauer.ga.nbody.calculation.*;
 import net.matthiasauer.ga.nbody.repositories.NBodyChromosomeFitnessRepository;
 import net.matthiasauer.ga.nbody.repositories.NBodyExperimentInformation;
 import net.matthiasauer.ga.nbody.repositories.NBodyExperimentInformationRepository;
-import net.matthiasauer.ga.nbody.ui.domain.NBodyChromosomeDTO;
+import net.matthiasauer.ga.nbody.ui.domain.CalculationResultDTO;
 import net.matthiasauer.ga.nbody.ui.domain.NBodyExperimentArgumentDTO;
 import net.matthiasauer.ga.nbody.ui.domain.NBodyIterationInformationDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -20,11 +19,17 @@ public class NBodyExperimentServiceImpl implements NBodyExperimentService {
     private final NBodyExperiment experiment;
     private final ExecutorService executorService;
     private final NBodyChromosomeFitnessRepository fitnessRepository;
+    private final NBodyFitnessAlgorithm fitnessAlgorithm;
     private final NBodyExperimentInformationRepository experimentInformationRepository;
 
     @Autowired
-    public NBodyExperimentServiceImpl(NBodyExperiment experiment, NBodyChromosomeFitnessRepository fitnessRepository, NBodyExperimentInformationRepository experimentInformationRepository) {
+    public NBodyExperimentServiceImpl(
+            NBodyExperiment experiment,
+            NBodyChromosomeFitnessRepository fitnessRepository,
+            NBodyExperimentInformationRepository experimentInformationRepository,
+            NBodyFitnessAlgorithm fitnessAlgorithm) {
         this.experiment = experiment;
+        this.fitnessAlgorithm = fitnessAlgorithm;
         this.fitnessRepository = fitnessRepository;
         this.experimentInformationRepository = experimentInformationRepository;
         this.executorService =
@@ -55,8 +60,11 @@ public class NBodyExperimentServiceImpl implements NBodyExperimentService {
             return null;
         }
 
+        List<List<NBodyAllele>> iterationSteps =
+                this.fitnessAlgorithm.getIterationSteps(fittest, experimentInformation.getNBodyExperimentArgument());
+
         NBodyIterationInformationDTO result = new NBodyIterationInformationDTO();
-        result.setFittest(NBodyChromosomeDTO.from(fittest));
+        result.setFittest(CalculationResultDTO.from(fittest.getFitness(), iterationSteps));
         result.setIteration(experimentInformation.getCurrentIteration());
         result.setExperimentArgument(NBodyExperimentArgumentDTO.from(experimentInformation.getNBodyExperimentArgument()));
 

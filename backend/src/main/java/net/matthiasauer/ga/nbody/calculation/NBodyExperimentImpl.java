@@ -5,13 +5,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class NBodyExperimentImpl extends AbstractExperiment<NBodyChromosome, NBodyExperimentArgument> implements NBodyExperiment {
+public class NBodyExperimentImpl extends AbstractExperiment<NBodyChromosome, NBodyExperimentArgument, NBodyAllele> implements NBodyExperiment {
     @Autowired
     public NBodyExperimentImpl(
             GenerateAlgorithm<NBodyChromosome, NBodyExperimentArgument> generateAlgorithm,
-            FitnessAlgorithm<NBodyChromosome, NBodyExperimentArgument> fitnessAlgorithm,
+            FitnessAlgorithm<NBodyChromosome, NBodyExperimentArgument, NBodyAllele> fitnessAlgorithm,
             SelectionAlgorithm<NBodyChromosome, NBodyExperimentArgument> selectionAlgorithm,
-            CrossoverAlgorithm<NBodyChromosome, NBodyExperimentArgument> crossoverAlgorithm,
+            CrossoverAlgorithm<NBodyChromosome, NBodyExperimentArgument, NBodyAllele> crossoverAlgorithm,
             MutationAlgorithm<NBodyChromosome, NBodyExperimentArgument> mutationAlgorithm,
             ReplaceAlgorithm<NBodyChromosome, NBodyExperimentArgument> replaceAlgorithm,
             TerminationAlgorithm<NBodyChromosome, NBodyExperimentArgument> terminationAlgorithm) {

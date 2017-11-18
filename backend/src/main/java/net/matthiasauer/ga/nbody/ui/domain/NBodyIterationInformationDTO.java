@@ -2,7 +2,7 @@ package net.matthiasauer.ga.nbody.ui.domain;
 
 public class NBodyIterationInformationDTO {
     private int iteration;
-    private NBodyChromosomeDTO fittest;
+    private CalculationResultDTO fittest;
     private NBodyExperimentArgumentDTO experimentArgument;
 
     public int getIteration() {
@@ -13,11 +13,11 @@ public class NBodyIterationInformationDTO {
         this.iteration = iteration;
     }
 
-    public NBodyChromosomeDTO getFittest() {
+    public CalculationResultDTO getFittest() {
         return fittest;
     }
 
-    public void setFittest(NBodyChromosomeDTO fittest) {
+    public void setFittest(CalculationResultDTO fittest) {
         this.fittest = fittest;
     }
 

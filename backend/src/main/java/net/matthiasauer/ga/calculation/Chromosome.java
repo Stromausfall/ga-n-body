@@ -1,7 +1,5 @@
 package net.matthiasauer.ga.calculation;
 
-import java.math.BigDecimal;
-
-public interface Chromosome<T extends ExperimentArgument> {
+public interface Chromosome<T extends ExperimentArgument, R extends Allele> {
     double getFitness();
 }

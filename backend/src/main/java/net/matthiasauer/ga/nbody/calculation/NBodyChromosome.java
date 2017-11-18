@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-public class NBodyChromosome implements Chromosome<NBodyExperimentArgument> {
+public class NBodyChromosome implements Chromosome<NBodyExperimentArgument, NBodyAllele> {
     private final List<NBodyAllele> alleles;
     private final double fitness;
 

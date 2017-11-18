@@ -2,20 +2,20 @@ package net.matthiasauer.ga.calculation;
 
 import java.util.Collection;
 
-public abstract class AbstractExperiment<T extends Chromosome<S>, S extends ExperimentArgument> implements Experiment<S> {
+public abstract class AbstractExperiment<T extends Chromosome<S, R>, S extends ExperimentArgument, R extends Allele> implements Experiment<S> {
     private final GenerateAlgorithm<T, S> generateAlgorithm;
-    private final FitnessAlgorithm<T, S> fitnessAlgorithm;
+    private final FitnessAlgorithm<T, S, R> fitnessAlgorithm;
     private final SelectionAlgorithm<T, S> selectionAlgorithm;
-    private final CrossoverAlgorithm<T, S> crossoverAlgorithm;
+    private final CrossoverAlgorithm<T, S, R> crossoverAlgorithm;
     private final MutationAlgorithm<T, S> mutationAlgorithm;
     private final ReplaceAlgorithm<T, S> replaceAlgorithm;
     private final TerminationAlgorithm<T, S> terminationAlgorithm;
 
     public AbstractExperiment(
             GenerateAlgorithm<T, S> generateAlgorithm,
-            FitnessAlgorithm<T, S> fitnessAlgorithm,
+            FitnessAlgorithm<T, S, R> fitnessAlgorithm,
             SelectionAlgorithm<T, S> selectionAlgorithm,
-            CrossoverAlgorithm<T, S> crossoverAlgorithm,
+            CrossoverAlgorithm<T, S, R> crossoverAlgorithm,
             MutationAlgorithm<T, S> mutationAlgorithm,
             ReplaceAlgorithm<T, S> replaceAlgorithm,
             TerminationAlgorithm<T, S> terminationAlgorithm) {

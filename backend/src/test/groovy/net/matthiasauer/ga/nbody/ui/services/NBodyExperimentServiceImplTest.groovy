@@ -1,9 +1,7 @@
 package net.matthiasauer.ga.nbody.ui.services
 
-import net.matthiasauer.ga.calculation.ExperimentArgument
-import net.matthiasauer.ga.nbody.calculation.NBodyChromosome
-import net.matthiasauer.ga.nbody.calculation.NBodyExperiment
-import net.matthiasauer.ga.nbody.calculation.NBodyExperimentArgument
+import net.matthiasauer.ga.calculation.FitnessAlgorithm
+import net.matthiasauer.ga.nbody.calculation.*
 import net.matthiasauer.ga.nbody.repositories.NBodyChromosomeFitnessRepository
 import net.matthiasauer.ga.nbody.repositories.NBodyExperimentInformation
 import net.matthiasauer.ga.nbody.repositories.NBodyExperimentInformationRepository
@@ -23,7 +21,8 @@ class NBodyExperimentServiceImplTest extends Specification {
             }
             NBodyChromosomeFitnessRepository fitnessRepository = Mock(NBodyChromosomeFitnessRepository)
             NBodyExperimentInformationRepository experimentInformationRepository = Mock(NBodyExperimentInformationRepository)
-            NBodyExperimentService classUnderTest = new NBodyExperimentServiceImpl(experiment, fitnessRepository, experimentInformationRepository)
+            NBodyFitnessAlgorithm fitnessAlgorithm = Mock(NBodyFitnessAlgorithm)
+            NBodyExperimentService classUnderTest = new NBodyExperimentServiceImpl(experiment, fitnessRepository, experimentInformationRepository, fitnessAlgorithm)
         when:
             classUnderTest.createExperiment(experimentArgument)
 
@@ -37,16 +36,17 @@ class NBodyExperimentServiceImplTest extends Specification {
             1 * experiment.execute(_) >> {
                 it ->
                     assert it.arguments[0] instanceof NBodyExperimentArgument
-                    assert ((NBodyExperimentArgument)it.arguments[0]).populationSize == 234
+                    assert ((NBodyExperimentArgument) it.arguments[0]).populationSize == 234
             }
     }
 
-    def "test that the getFittest method returns the fittest from the repository"() {
+    def "test that the getFittest method returns the fittest from the repository (and the iteration steps are returned)"() {
         given:
             NBodyExperiment experiment = Mock(NBodyExperiment)
             NBodyChromosomeFitnessRepository fitnessRepository = Mock(NBodyChromosomeFitnessRepository)
+            NBodyFitnessAlgorithm fitnessAlgorithm = Mock(NBodyFitnessAlgorithm)
             NBodyExperimentInformationRepository experimentInformationRepository = Mock(NBodyExperimentInformationRepository)
-            NBodyExperimentService classUnderTest = new NBodyExperimentServiceImpl(experiment, fitnessRepository, experimentInformationRepository)
+            NBodyExperimentService classUnderTest = new NBodyExperimentServiceImpl(experiment, fitnessRepository, experimentInformationRepository, fitnessAlgorithm)
             NBodyExperimentArgument experimentArgument = new NBodyExperimentArgument.Builder().withPopulationSize(10).build()
             NBodyExperimentInformation experimentInformation = new NBodyExperimentInformation().with {
                 it.setCurrentIteration(24)
@@ -56,6 +56,10 @@ class NBodyExperimentServiceImplTest extends Specification {
             }
 
             NBodyChromosome chromosome = new NBodyChromosome([], 2.0)
+            List<List<NBodyAllele>> iterationSteps = [
+                    [new NBodyAllele(0, 0, 0, 0,0), new NBodyAllele(0, 0, 0, 0,0)],
+                    [new NBodyAllele(0, 0, 0, 0,0), new NBodyAllele(0, 0, 0, 0,0)]
+            ]
 
         when:
             NBodyIterationInformationDTO data = classUnderTest.getCurrentIteration()
@@ -65,11 +69,14 @@ class NBodyExperimentServiceImplTest extends Specification {
             1 * fitnessRepository.getFittest() >> chromosome
             1 * experimentInformationRepository.getLatest() >> experimentInformation
 
+            // expecte that the fitnessAlgorithm is called to get the iteration steps for the fittest chromosome
+            1 * fitnessAlgorithm.getIterationSteps(chromosome, experimentArgument) >> iterationSteps
+
             // expect that the returned data is the one returned by the repo
             data.iteration == 24
             data.experimentArgument.getPopulationSize() == 10
             data.fittest.fitness == 2.0d
-            data.fittest.alleles.size() == 0
+            data.fittest.iterations.size() == 2
     }
 
     @Unroll
@@ -78,7 +85,8 @@ class NBodyExperimentServiceImplTest extends Specification {
             NBodyExperiment experiment = Mock(NBodyExperiment)
             NBodyChromosomeFitnessRepository fitnessRepository = Mock(NBodyChromosomeFitnessRepository)
             NBodyExperimentInformationRepository experimentInformationRepository = Mock(NBodyExperimentInformationRepository)
-            NBodyExperimentService classUnderTest = new NBodyExperimentServiceImpl(experiment, fitnessRepository, experimentInformationRepository)
+            NBodyFitnessAlgorithm fitnessAlgorithm = Mock(NBodyFitnessAlgorithm)
+            NBodyExperimentService classUnderTest = new NBodyExperimentServiceImpl(experiment, fitnessRepository, experimentInformationRepository, fitnessAlgorithm)
 
             fitnessRepository.getFittest() >> chromosome
             experimentInformationRepository.getLatest() >> experimentInformation

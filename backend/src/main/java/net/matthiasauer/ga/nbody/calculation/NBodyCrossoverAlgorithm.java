@@ -11,7 +11,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Component
-public class NBodyCrossoverAlgorithm implements CrossoverAlgorithm<NBodyChromosome, NBodyExperimentArgument> {
+public class NBodyCrossoverAlgorithm implements CrossoverAlgorithm<NBodyChromosome, NBodyExperimentArgument, NBodyAllele> {
     private final RandomProvider random;
 
     @Autowired
