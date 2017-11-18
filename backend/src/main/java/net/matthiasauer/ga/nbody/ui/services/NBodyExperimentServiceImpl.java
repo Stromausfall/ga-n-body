@@ -41,9 +41,9 @@ public class NBodyExperimentServiceImpl implements NBodyExperimentService {
     }
 
     @Override
-    public synchronized void createExperiment(NBodyExperimentArgument experimentArgument) {
+    public synchronized void createExperiment(NBodyExperimentArgumentDTO experimentArgument) {
         // start the experiment on the thread
-        this.executorService.submit(() -> this.startExperiment(experimentArgument));
+        this.executorService.submit(() -> this.startExperiment(experimentArgument.toNBodyExperimentArgument()));
     }
 
     @Override

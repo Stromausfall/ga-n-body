@@ -47,9 +47,9 @@ class ExperimentControllerTest extends Specification {
             )
 
         then:
-            1 * experimentService.createExperiment(_ as NBodyExperimentArgument) >> {
+            1 * experimentService.createExperiment(_ as NBodyExperimentArgumentDTO) >> {
                 arguments ->
-                    assert arguments[0] instanceof NBodyExperimentArgument
+                    assert arguments[0] instanceof NBodyExperimentArgumentDTO
             }
 
         then:

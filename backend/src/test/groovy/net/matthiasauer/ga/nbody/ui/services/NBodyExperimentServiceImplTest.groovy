@@ -7,6 +7,7 @@ import net.matthiasauer.ga.nbody.calculation.NBodyExperimentArgument
 import net.matthiasauer.ga.nbody.repositories.NBodyChromosomeFitnessRepository
 import net.matthiasauer.ga.nbody.repositories.NBodyExperimentInformation
 import net.matthiasauer.ga.nbody.repositories.NBodyExperimentInformationRepository
+import net.matthiasauer.ga.nbody.ui.domain.NBodyExperimentArgumentDTO
 import net.matthiasauer.ga.nbody.ui.domain.NBodyIterationInformationDTO
 import spock.lang.Specification
 import spock.lang.Unroll
@@ -15,7 +16,11 @@ class NBodyExperimentServiceImplTest extends Specification {
     def "test that the createService method starts an experiment with the given arguments (and clears the repositories)"() {
         given:
             NBodyExperiment experiment = Mock(NBodyExperiment)
-            ExperimentArgument experimentArgument = new NBodyExperimentArgument.Builder().build()
+            NBodyExperimentArgumentDTO experimentArgument = new NBodyExperimentArgumentDTO().with {
+                it.populationSize = 234
+
+                return it
+            }
             NBodyChromosomeFitnessRepository fitnessRepository = Mock(NBodyChromosomeFitnessRepository)
             NBodyExperimentInformationRepository experimentInformationRepository = Mock(NBodyExperimentInformationRepository)
             NBodyExperimentService classUnderTest = new NBodyExperimentServiceImpl(experiment, fitnessRepository, experimentInformationRepository)
@@ -29,7 +34,11 @@ class NBodyExperimentServiceImplTest extends Specification {
             1 * fitnessRepository.clear()
             1 * experimentInformationRepository.clear()
         then:
-            1 * experiment.execute(experimentArgument)
+            1 * experiment.execute(_) >> {
+                it ->
+                    assert it.arguments[0] instanceof NBodyExperimentArgument
+                    assert ((NBodyExperimentArgument)it.arguments[0]).populationSize == 234
+            }
     }
 
     def "test that the getFittest method returns the fittest from the repository"() {

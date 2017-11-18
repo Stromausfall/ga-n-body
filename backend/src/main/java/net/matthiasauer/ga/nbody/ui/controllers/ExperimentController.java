@@ -25,9 +25,7 @@ public class ExperimentController {
     public void createExperiment(@RequestBody NBodyExperimentArgumentDTO experimentArgumentDTO) {
         this.logger.info("request to create experiment");
 
-        NBodyExperimentArgument experimentArgument = experimentArgumentDTO.toNBodyExperimentArgument();
-
-        this.experimentService.createExperiment(experimentArgument);
+        this.experimentService.createExperiment(experimentArgumentDTO);
     }
 
     @CrossOrigin
