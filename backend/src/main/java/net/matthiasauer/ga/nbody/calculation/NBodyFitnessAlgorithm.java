@@ -4,6 +4,7 @@ import net.matthiasauer.ga.calculation.FitnessAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,30 +23,44 @@ public class NBodyFitnessAlgorithm implements FitnessAlgorithm<NBodyChromosome, 
     }
 
     private NBodyChromosome evaluate(NBodyChromosome chromosome, NBodyExperimentArgument experimentArgument) {
-        double fitness = 0.0d;
+        List<List<NBodyAllele>> iterationSteps = this.getIterationSteps(chromosome, experimentArgument);
+
+        // remove the intial (uncalculated) step from the fitness
+        int fitness = iterationSteps.size() - 1;
+
+        // return the chromosome with a now calculated fitness value
+        return new NBodyChromosome(chromosome.getAlleles(), fitness);
+    }
+
+    @Override
+    public Collection<NBodyChromosome> calculate(Collection<NBodyChromosome> population, NBodyExperimentArgument experimentArgument) {
+        return population.parallelStream().map(chromosome -> evaluate(chromosome, experimentArgument)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<List<NBodyAllele>> getIterationSteps(NBodyChromosome chromosome, NBodyExperimentArgument experimentArgument) {
+        List<List<NBodyAllele>> iterationSteps = new ArrayList<>();
         List<NBodyAllele> bodies = chromosome.getAlleles();
+
+        // add the initial step
+        iterationSteps.add(bodies);
 
         for(int i = 0; i < experimentArgument.getFitnessMaxIterations(); i++) {
             // get a final reference on bodies (needed for the lambda)
-            final List<NBodyAllele> allBodies = bodies;
+            final List<NBodyAllele> calculatedBodies = bodies;
 
             // move the bodies
-            bodies = bodies.stream().map(body -> this.updateBodyPosition.updatetBody(body, allBodies, experimentArgument)).collect(Collectors.toList());
+            bodies = bodies.stream().map(body -> this.updateBodyPosition.updatetBody(body, calculatedBodies, experimentArgument)).collect(Collectors.toList());
 
             if (!this.terminationAlgorithm.areBodiesInCorrectDistanceToEachOther(bodies, experimentArgument)) {
                 // stop -  one of the bodies is too far away
                 break;
             }
 
-            // if this is reached - all bodies are still inside ! (therefore increase the fitness that this chromsome achieved
-            fitness += 1;
+            // add the calculated step
+            iterationSteps.add(bodies);
         }
 
-        return new NBodyChromosome(bodies, fitness);
-    }
-
-    @Override
-    public Collection<NBodyChromosome> calculate(Collection<NBodyChromosome> population, NBodyExperimentArgument experimentArgument) {
-        return population.parallelStream().map(chromosome -> evaluate(chromosome, experimentArgument)).collect(Collectors.toList());
+        return iterationSteps;
     }
 }
