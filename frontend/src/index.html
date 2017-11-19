@@ -24,19 +24,19 @@
           populationSize:
         </th>
         <th>
-          <input id="populationSize" type="number" name="populationSize" min="10" max="10000" step="1" value="500">
+          <input id="populationSize" type="number" name="populationSize" min="10" max="10000" step="1" value="750">
         </th>
         <th>
           newPopulationSize
         </th>
         <th>
-          <input id="newPopulationSize" type="number" name="newPopulationSize" min="10" max="10000" step="1" value="500">
+          <input id="newPopulationSize" type="number" name="newPopulationSize" min="10" max="10000" step="1" value="750">
         </th>
         <th>
           allelesPerChromosome
         </th>
         <th>
-          <input id="allelesPerChromosome" type="number" name="allelesPerChromosome" min="2" max="10" step="1" value="3">
+          <input id="allelesPerChromosome" type="number" name="allelesPerChromosome" min="2" max="10" step="1" value="5">
         </th>
       </tr>
       <tr>
@@ -45,19 +45,19 @@
         </th>
         <th>
           <input id="crossOverReturnsParentLikelihood" type="number" name="crossOverReturnsParentLikelihood" min="0" max="1" step="0.001"
-            value="0.05">
+            value="0.50">
         </th>
         <th>
           minPosXY:
         </th>
         <th>
-          <input id="minPosXY" type="number" name="minPosXY" min="-300" max="300" step="1" value="-100">
+          <input id="minPosXY" type="number" name="minPosXY" min="-300" max="300" step="1" value="-200">
         </th>
         <th>
           maxPosXY:
         </th>
         <th>
-          <input id="maxPosXY" type="number" name="maxPosXY" min="-300" max="300" step="1" value="100">
+          <input id="maxPosXY" type="number" name="maxPosXY" min="-300" max="300" step="1" value="200">
         </th>
       </tr>
       <tr>
@@ -65,19 +65,19 @@
           minMass:
         </th>
         <th>
-          <input id="minMass" type="number" name="minMass" min="0.0001" max="100" step="0.0001" value="0.5">
+          <input id="minMass" type="number" name="minMass" min="0.0001" max="100" step="0.0001" value="1">
         </th>
         <th>
           maxMass:
         </th>
         <th>
-          <input id="maxMass" type="number" name="maxMass" min="0.0001" max="100" step="0.0001" value="2">
+          <input id="maxMass" type="number" name="maxMass" min="0.0001" max="100" step="0.0001" value="8">
         </th>
         <th>
           minVelocityXY:
         </th>
         <th>
-          <input id="minVelocityXY" type="number" name="minVelocityXY" min="-50" max="50" step="0.01" value="-2">
+          <input id="minVelocityXY" type="number" name="minVelocityXY" min="-50" max="50" step="0.01" value="-20">
         </th>
       </tr>
       <tr>
@@ -85,58 +85,50 @@
           maxVelocityXY:
         </th>
         <th>
-          <input id="maxVelocityXY" type="number" name="maxVelocityXY" min="-50" max="50" step="0.01" value="2">
+          <input id="maxVelocityXY" type="number" name="maxVelocityXY" min="-50" max="50" step="0.01" value="20">
         </th>
         <th>
           mutateNucleotideChance:
         </th>
         <th>
-          <input id="mutateNucleotideChance" type="number" name="mutateNucleotideChance" min="0" max="1" step="0.001" value="0.05">
+          <input id="mutateNucleotideChance" type="number" name="mutateNucleotideChance" min="0" max="1" step="0.001" value="0.1">
         </th>
-        <th>
-          fitnessMaxIterations:
-        </th>
-        <th>
-          <input id="fitnessMaxIterations" type="number" name="fitnessMaxIterations" min="5" max="10000" step="1" value="100">
-        </th>
-      </tr>
-      <tr>
         <th>
           fitnessMinDistanceBetweenBodies:
         </th>
         <th>
           <input id="fitnessMinDistanceBetweenBodies" type="number" name="fitnessMinDistanceBetweenBodies" min="0.01" max="50" step="0.01"
-            value="1">
+            value="50">
         </th>
+      </tr>
+      <tr>
         <th>
           fitnessMaxDistanceBetweenBodies:
         </th>
         <th>
           <input id="fitnessMaxDistanceBetweenBodies" type="number" name="fitnessMaxDistanceBetweenBodies" min="10" max="1000" step="0.01"
-            value="200">
+            value="500">
         </th>
         <th>
           fitnessGravityConstant:
         </th>
         <th>
-          <input id="fitnessGravityConstant" type="number" name="fitnessGravityConstant" min="0.01" max="100" step="0.001" value="0.5">
+          <input id="fitnessGravityConstant" type="number" name="fitnessGravityConstant" min="0.01" max="100" step="0.001" value="1.25">
         </th>
-      </tr>
-      <tr>
         <th>
           terminationMaxIterations:
         </th>
         <th>
-          <input id="terminationMaxIterations" type="number" name="terminationMaxIterations" min="5" max="10000" step="1" value="100">
+          <input id="terminationMaxIterations" type="number" name="terminationMaxIterations" min="5" max="10000" step="1" value="250">
         </th>
+      </tr>
+      <tr>
         <th>
           terminationTargetFitness:
         </th>
         <th>
-          <input id="terminationTargetFitness" type="number" name="terminationTargetFitness" min="5" max="10000" step="1" value="100">
+          <input id="terminationTargetFitness" type="number" name="terminationTargetFitness" min="5" max="10000" step="1" value="1000">
         </th>
-        <th></th>
-        <th></th>
       </tr>
     </table>
 

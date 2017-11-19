@@ -44,7 +44,7 @@ public class NBodyFitnessAlgorithmImpl implements NBodyFitnessAlgorithm {
         // add the initial step
         iterationSteps.add(bodies);
 
-        for(int i = 0; i < experimentArgument.getFitnessMaxIterations(); i++) {
+        for(int i = 0; i < experimentArgument.getTerminationTargetFitness(); i++) {
             // get a final reference on bodies (needed for the lambda)
             final List<NBodyAllele> calculatedBodies = bodies;
 

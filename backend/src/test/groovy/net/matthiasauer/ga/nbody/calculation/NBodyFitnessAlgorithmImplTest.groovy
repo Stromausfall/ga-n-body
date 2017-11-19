@@ -16,7 +16,7 @@ class NBodyFitnessAlgorithmImplTest extends Specification {
             ]
             NBodyExperimentArgument experimentArgument =
                     new NBodyExperimentArgument.Builder()
-                            .withFitnessMaxIterations(10)
+                            .withTerminationTargetFitness(10)
                             .build()
             NBodyAllele allele3 = new NBodyAllele(100, 100, 1, 2.5, 2.5)
             NBodyAllele allele4 = new NBodyAllele(0, 0, 1, 2.5, 2.5)
@@ -45,7 +45,7 @@ class NBodyFitnessAlgorithmImplTest extends Specification {
             ]
             NBodyExperimentArgument experimentArgument =
                     new NBodyExperimentArgument.Builder()
-                            .withFitnessMaxIterations(10)
+                            .withTerminationTargetFitness(10)
                             .build()
             NBodyAllele allele3 = new NBodyAllele(100, 100, 1, 2.5, 2.5)
             NBodyAllele allele4 = new NBodyAllele(0, 0, 1, 2.5, 2.5)
@@ -90,7 +90,7 @@ class NBodyFitnessAlgorithmImplTest extends Specification {
             NBodyChromosome chromosome = new NBodyChromosome([allele1, allele2])
             NBodyExperimentArgument experimentArgument =
                     new NBodyExperimentArgument.Builder()
-                            .withFitnessMaxIterations(10)
+                            .withTerminationTargetFitness(10)
                             .build()
             NBodyAllele allele3 = new NBodyAllele(100, 100, 1, 2.5, 2.5)
             NBodyAllele allele4 = new NBodyAllele(0, 0, 1, 2.5, 2.5)

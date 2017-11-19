@@ -21,16 +21,19 @@ public class NBodyExperimentServiceImpl implements NBodyExperimentService {
     private final NBodyChromosomeFitnessRepository fitnessRepository;
     private final NBodyFitnessAlgorithm fitnessAlgorithm;
     private final NBodyExperimentInformationRepository experimentInformationRepository;
+    private final NBodyCenterOfMassCalculation centerOfMassCalculation;
 
     @Autowired
     public NBodyExperimentServiceImpl(
             NBodyExperiment experiment,
             NBodyChromosomeFitnessRepository fitnessRepository,
             NBodyExperimentInformationRepository experimentInformationRepository,
-            NBodyFitnessAlgorithm fitnessAlgorithm) {
+            NBodyFitnessAlgorithm fitnessAlgorithm,
+            NBodyCenterOfMassCalculation centerOfMassCalculation) {
         this.experiment = experiment;
         this.fitnessAlgorithm = fitnessAlgorithm;
         this.fitnessRepository = fitnessRepository;
+        this.centerOfMassCalculation = centerOfMassCalculation;
         this.experimentInformationRepository = experimentInformationRepository;
         this.executorService =
                 Executors.newSingleThreadExecutor();
@@ -64,7 +67,7 @@ public class NBodyExperimentServiceImpl implements NBodyExperimentService {
                 this.fitnessAlgorithm.getIterationSteps(fittest, experimentInformation.getNBodyExperimentArgument());
 
         NBodyIterationInformationDTO result = new NBodyIterationInformationDTO();
-        result.setFittest(CalculationResultDTO.from(fittest.getFitness(), iterationSteps));
+        result.setFittest(CalculationResultDTO.from(fittest.getFitness(), iterationSteps, this.centerOfMassCalculation));
         result.setIteration(experimentInformation.getCurrentIteration());
         result.setExperimentArgument(NBodyExperimentArgumentDTO.from(experimentInformation.getNBodyExperimentArgument()));
 

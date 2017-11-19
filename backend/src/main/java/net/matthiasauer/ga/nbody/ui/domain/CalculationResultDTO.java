@@ -1,6 +1,7 @@
 package net.matthiasauer.ga.nbody.ui.domain;
 
 import net.matthiasauer.ga.nbody.calculation.NBodyAllele;
+import net.matthiasauer.ga.nbody.calculation.NBodyCenterOfMassCalculation;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,12 +26,12 @@ public class CalculationResultDTO {
         this.fitness = fitness;
     }
 
-    public static CalculationResultDTO from(double fitness, List<List<NBodyAllele>> iterations) {
+    public static CalculationResultDTO from(double fitness, List<List<NBodyAllele>> iterations, NBodyCenterOfMassCalculation centerOfMassCalculation) {
         CalculationResultDTO dto = new CalculationResultDTO();
         dto.setFitness(fitness);
         dto.setIterations(
                 iterations.stream()
-                        .map(IterationDTO::from)
+                        .map(iteration -> IterationDTO.from(iteration, centerOfMassCalculation))
                         .collect(Collectors.toList())
 
         );

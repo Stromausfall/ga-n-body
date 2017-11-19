@@ -2,9 +2,10 @@ import Mushroom from '../sprites/Mushroom'
 
 export default class WorldModel {
   constructor(game) {
-    this.bodies = null;
+    this.iterations = null;
     this.game = game;
     this.sprites = [];
+    this.currentIterationIndex = 0
 
     this.initialize()
   }
@@ -15,11 +16,15 @@ export default class WorldModel {
   }
 
   getPosition(id) {
-    let position = this.bodies[id]
+    // get the current iteration
+    let currentIteration = this.iterations[this.currentIterationIndex]
+
+    // get the body
+    let body = currentIteration.bodies[id]
 
     return {
-      x: position.posX,
-      y: position.posY
+      x: body.posX - currentIteration.centerOfMass.x + this.game.width / 2,
+      y: body.posY - currentIteration.centerOfMass.y + this.game.height / 2
     }
   }
 
@@ -41,13 +46,15 @@ export default class WorldModel {
   updateData(iteration) {
     this.updateBannerText(iteration.iteration, iteration.fittest.fitness);
 
-    this.bodies = iteration.fittest.alleles;
+    this.iterations = iteration.fittest.iterations;
     this.experimentArgument = iteration.experimentArgument;
 
     this.createBodies();
 
+    this.currentIterationIndex = 0;
+
     // update body positions
-    this.game.time.events.repeat(Phaser.Timer.SECOND * 0.05, iteration.fittest.fitness, this.updateBodies, this);
+    this.game.time.events.repeat(Phaser.Timer.SECOND * 0.01, iteration.fittest.fitness, this.updateBodies, this);
   }
 
   removePreviousSprites() {
@@ -64,14 +71,18 @@ export default class WorldModel {
 
     let id = 0;
 
-    for (let body of this.bodies) {
+    // create a sprite for each body
+    for (let i = 0; i < this.experimentArgument.allelesPerChromosome; i++) {
       // create the sprite   
       let mushroom = new Mushroom({
         game: this.game,
-        asset: 'mushroom',
+        asset: 'body',
         worldModel: this,
         id: id
       })
+
+      let scaleFactor = this.experimentArgument.fitnessMinDistanceBetweenBodies / 100.0;
+      mushroom.scale.setTo(scaleFactor, scaleFactor)
 
       // add it tot the game
       this.game.add.existing(mushroom);
@@ -85,35 +96,15 @@ export default class WorldModel {
   }
 
   updateBodies() {
-    if (this.bodies == null) {
+    if (this.iterations == null) {
       return;
     }
 
-    for (let m1 of this.bodies) {
-
-      for (let m2 of this.bodies) {
-        // no need to calculate the force of the body on intself
-        if (m1 == m2) {
-          continue
-        }
-
-        let forceX = m2.posX - m1.posX
-        let forceY = m2.posY - m1.posY
-
-        let r = Math.sqrt(
-          Math.pow(forceX, 2) + Math.pow(forceY, 2))
-        let force = m1.mass * m2.mass / r
-
-
-        // apply the force
-        m1.velocityX += forceX * force
-        m1.velocityY += forceY * force
-      }
-    }
-
-    for (let body of this.bodies) {
-      body.posX += body.velocityX;
-      body.posY += body.velocityY;
-    }
+    // increase the iteration (meaning now we use the next iteration)
+    this.currentIterationIndex += 1
+    this.currentIterationIndex =
+      Math.min(
+        this.currentIterationIndex,
+        this.iterations.length - 1);
   }
 }

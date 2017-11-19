@@ -1,6 +1,8 @@
 package net.matthiasauer.ga.nbody.ui.domain
 
 import net.matthiasauer.ga.nbody.calculation.NBodyAllele
+import net.matthiasauer.ga.nbody.calculation.NBodyCenterOfMassCalculation
+import org.apache.commons.math3.geometry.euclidean.twod.Vector2D
 import spock.lang.Specification
 
 class CalculationResultDTOTest extends Specification {
@@ -11,16 +13,22 @@ class CalculationResultDTOTest extends Specification {
                             new NBodyAllele(1, 2, 3, 4, 5)
                     ],
                     [
-                           new NBodyAllele(2, 3, 4, 5, 6),
-                           new NBodyAllele(7, 8, 9, 10, 11)
+                            new NBodyAllele(2, 3, 4, 5, 6),
+                            new NBodyAllele(7, 8, 9, 10, 11)
                     ]
             ]
+            NBodyCenterOfMassCalculation centerOfMassCalculation = Mock(NBodyCenterOfMassCalculation)
             double fitness = 7.0d
+            Vector2D centerOfMassForIteration1 = new Vector2D(2, 4)
+            Vector2D centerOfMassForIteration2 = new Vector2D(-2, 7)
 
         when:
-            CalculationResultDTO classUnderTest = CalculationResultDTO.from(fitness, iterations)
+            CalculationResultDTO classUnderTest = CalculationResultDTO.from(fitness, iterations, centerOfMassCalculation)
 
         then:
+            1 * centerOfMassCalculation.calculate(iterations[0]) >> centerOfMassForIteration1
+            1 * centerOfMassCalculation.calculate(iterations[1]) >> centerOfMassForIteration2
+
             classUnderTest.getFitness() == fitness
             classUnderTest.getIterations()[0].bodies[0].posX == iterations[0][0].posX
             classUnderTest.getIterations()[0].bodies[0].posY == iterations[0][0].posY

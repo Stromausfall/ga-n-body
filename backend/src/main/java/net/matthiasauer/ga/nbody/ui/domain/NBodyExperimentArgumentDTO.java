@@ -14,7 +14,6 @@ public class NBodyExperimentArgumentDTO {
     private double minVelocityXY;
     private double maxVelocityYY;
     private double mutateNucleotideChance;
-    private int fitnessMaxIterations;
     private double fitnessMaxDistanceBetweenBodies;
     private double fitnessMinDistanceBetweenBodies;
     private double fitnessGravityConstant;
@@ -109,14 +108,6 @@ public class NBodyExperimentArgumentDTO {
         this.mutateNucleotideChance = mutateNucleotideChance;
     }
 
-    public int getFitnessMaxIterations() {
-        return fitnessMaxIterations;
-    }
-
-    public void setFitnessMaxIterations(int fitnessMaxIterations) {
-        this.fitnessMaxIterations = fitnessMaxIterations;
-    }
-
     public double getFitnessMaxDistanceBetweenBodies() {
         return fitnessMaxDistanceBetweenBodies;
     }
@@ -164,7 +155,6 @@ public class NBodyExperimentArgumentDTO {
                 .withFitnessGravityConstant(this.getFitnessGravityConstant())
                 .withFitnessMaxDistanceBetweenBodies(this.getFitnessMaxDistanceBetweenBodies())
                 .withFitnessMinDistanceBetweenBodies(this.getFitnessMinDistanceBetweenBodies())
-                .withFitnessMaxIterations(this.getFitnessMaxIterations())
                 .withMaxMass(this.getMaxMass())
                 .withMaxPosXY(this.getMaxPosXY())
                 .withMaxVelocityYY(this.getMaxVelocityYY())
@@ -185,7 +175,6 @@ public class NBodyExperimentArgumentDTO {
         result.setCrossOverReturnsParentLikelihood(experimentArgument.getCrossOverReturnsParentLikelihood());
         result.setFitnessGravityConstant(experimentArgument.getFitnessGravityConstant());
         result.setFitnessMaxDistanceBetweenBodies(experimentArgument.getFitnessMaxDistanceBetweenBodies());
-        result.setFitnessMaxIterations(experimentArgument.getFitnessMaxIterations());
         result.setFitnessMinDistanceBetweenBodies(experimentArgument.getFitnessMinDistanceBetweenBodies());
         result.setMaxMass(experimentArgument.getMaxMass());
         result.setMinMass(experimentArgument.getMinMass());

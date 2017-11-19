@@ -19,7 +19,6 @@ class NBodyExperimentArgumentDTOTest extends Specification {
             classUnderTest.minVelocityXY = 9
             classUnderTest.maxVelocityYY = 10
             classUnderTest.mutateNucleotideChance = 11
-            classUnderTest.fitnessMaxIterations = 12
             classUnderTest.fitnessMaxDistanceBetweenBodies = 13
             classUnderTest.fitnessMinDistanceBetweenBodies = 14
             classUnderTest.fitnessGravityConstant = 15
@@ -41,7 +40,6 @@ class NBodyExperimentArgumentDTOTest extends Specification {
             result.minVelocityXY == 9
             result.maxVelocityYY == 10
             result.mutateNucleotideChance == 11
-            result.fitnessMaxIterations == 12
             result.fitnessMaxDistanceBetweenBodies == 13
             result.fitnessMinDistanceBetweenBodies == 14
             result.fitnessGravityConstant == 15
@@ -64,7 +62,6 @@ class NBodyExperimentArgumentDTOTest extends Specification {
             classUnderTest.minVelocityXY = 9
             classUnderTest.maxVelocityYY = 10
             classUnderTest.mutateNucleotideChance = 11
-            classUnderTest.fitnessMaxIterations = 12
             classUnderTest.fitnessMaxDistanceBetweenBodies = 13
             classUnderTest.fitnessMinDistanceBetweenBodies = 14
             classUnderTest.fitnessGravityConstant = 15
@@ -89,7 +86,6 @@ class NBodyExperimentArgumentDTOTest extends Specification {
             result.minVelocityXY == 9
             result.maxVelocityYY == 10
             result.mutateNucleotideChance == 11
-            result.fitnessMaxIterations == 12
             result.fitnessMaxDistanceBetweenBodies == 13
             result.fitnessMinDistanceBetweenBodies == 14
             result.fitnessGravityConstant == 15

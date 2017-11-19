@@ -14,7 +14,6 @@ public class NBodyExperimentArgument implements ExperimentArgument {
     private final double minVelocityXY;
     private final double maxVelocityYY;
     private final double mutateNucleotideChance;
-    private final int fitnessMaxIterations;
     private final double fitnessMaxDistanceBetweenBodies;
     private final double fitnessMinDistanceBetweenBodies;
     private final double fitnessGravityConstant;
@@ -33,7 +32,6 @@ public class NBodyExperimentArgument implements ExperimentArgument {
         minVelocityXY = builder.minVelocityXY;
         maxVelocityYY = builder.maxVelocityYY;
         mutateNucleotideChance = builder.mutateNucleotideChance;
-        fitnessMaxIterations = builder.fitnessMaxIterations;
         fitnessMaxDistanceBetweenBodies = builder.fitnessMaxDistanceBetweenBodies;
         fitnessMinDistanceBetweenBodies = builder.fitnessMinDistanceBetweenBodies;
         fitnessGravityConstant = builder.fitnessGravityConstant;
@@ -85,15 +83,11 @@ public class NBodyExperimentArgument implements ExperimentArgument {
         return mutateNucleotideChance;
     }
 
-    public int getFitnessMaxIterations() {
-        return fitnessMaxIterations;
-    }
-
     public double getFitnessMaxDistanceBetweenBodies() {
         return fitnessMaxDistanceBetweenBodies;
     }
 
-    public double getFitnessMinDistanceBetweenBodies() {
+    public double  () {
         return fitnessMinDistanceBetweenBodies;
     }
 
@@ -121,7 +115,6 @@ public class NBodyExperimentArgument implements ExperimentArgument {
         private double minVelocityXY;
         private double maxVelocityYY;
         private double mutateNucleotideChance;
-        private int fitnessMaxIterations;
         private double fitnessMaxDistanceBetweenBodies;
         private double fitnessMinDistanceBetweenBodies;
         private double fitnessGravityConstant;
@@ -183,11 +176,6 @@ public class NBodyExperimentArgument implements ExperimentArgument {
 
         public Builder withMutateNucleotideChance(double mutateNucleotideChance) {
             this.mutateNucleotideChance = mutateNucleotideChance;
-            return this;
-        }
-
-        public Builder withFitnessMaxIterations(int fitnessMaxIterations) {
-            this.fitnessMaxIterations = fitnessMaxIterations;
             return this;
         }
 

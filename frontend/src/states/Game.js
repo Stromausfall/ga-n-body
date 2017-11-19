@@ -67,7 +67,7 @@ export default class extends Phaser.State {
 
 
         // get the fittest after the simulation has finished !
-        let timeBeforeGettingNewFittest = Phaser.Timer.SECOND * 0.05 * (data.fittest.fitness + 1);
+        let timeBeforeGettingNewFittest = Phaser.Timer.SECOND * 0.01 * (data.fittest.fitness + 1);
 
         if (timeBeforeGettingNewFittest < Phaser.Timer.SECOND) {
           timeBeforeGettingNewFittest = Phaser.Timer.SECOND

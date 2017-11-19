@@ -1,6 +1,7 @@
 package net.matthiasauer.ga.nbody.ui.controllers
 
 import net.matthiasauer.ga.nbody.calculation.NBodyAllele
+import net.matthiasauer.ga.nbody.calculation.NBodyCenterOfMassCalculationImpl
 import net.matthiasauer.ga.nbody.calculation.NBodyChromosome
 import net.matthiasauer.ga.nbody.calculation.NBodyExperimentArgument
 import net.matthiasauer.ga.nbody.ui.domain.CalculationResultDTO
@@ -95,20 +96,19 @@ class ExperimentControllerTest extends Specification {
             NBodyExperimentArgument experimentArgument = new NBodyExperimentArgument.Builder().withTerminationTargetFitness(234.3).build()
             NBodyIterationInformationDTO data = new NBodyIterationInformationDTO().with {
                 it.setExperimentArgument(NBodyExperimentArgumentDTO.from(experimentArgument))
-                it.setFittest(CalculationResultDTO.from(5, [[allele1], [allele2]]))
+                it.setFittest(CalculationResultDTO.from(5, [[allele1], [allele2]], new NBodyCenterOfMassCalculationImpl()))
                 it.setIteration(22)
 
                 return it
             }
 
             String expectedSerializedChromosome =
-                    '{"iteration":22,"fittest":{"iterations":[{"bodies":[{"posX":1.0,"posY":2.0,"mass":3.0,"velocityX":4.0,"velocityY":5.0}]},'+
-                            '{"bodies":[{"posX":2.0,"posY":3.0,"mass":4.0,"velocityX":5.0,"velocityY":6.0}]}],"fitness":5.0},"experimentArgument":'+
-                            '{"populationSize":0,"newPopulationSize":0,"allelesPerChromosome":0,"crossOverReturnsParentLikelihood":0.0,"minPosXY":0.0,'+
+                    '{"iteration":22,"fittest":{"iterations":[{"bodies":[{"posX":1.0,"posY":2.0,"mass":3.0,"velocityX":4.0,"velocityY":5.0}],"centerOfMass":{"x":1.0,"y":2.0}},'+
+                            '{"bodies":[{"posX":2.0,"posY":3.0,"mass":4.0,"velocityX":5.0,"velocityY":6.0}],"centerOfMass":{"x":2.0,"y":3.0}}],"fitness":5.0},'+
+                            '"experimentArgument":{"populationSize":0,"newPopulationSize":0,"allelesPerChromosome":0,"crossOverReturnsParentLikelihood":0.0,"minPosXY":0.0,'+
                             '"maxPosXY":0.0,"minMass":0.0,"maxMass":0.0,"minVelocityXY":0.0,"maxVelocityYY":0.0,"mutateNucleotideChance":0.0,'+
-                            '"fitnessMaxIterations":0,"fitnessMaxDistanceBetweenBodies":0.0,"fitnessMinDistanceBetweenBodies":0.0,'+
-                            '"fitnessGravityConstant":0.0,"terminationMaxIterations":0,"terminationTargetFitness":234.3}}'
-
+                            '"fitnessMaxDistanceBetweenBodies":0.0,"fitnessMinDistanceBetweenBodies":0.0,"fitnessGravityConstant":0.0,"terminationMaxIterations":0,'+
+                            '"terminationTargetFitness":234.3}}'
             NBodyExperimentService experimentService = Mock(NBodyExperimentService)
             ExperimentController classUnderTest = new ExperimentController(experimentService)
             MockMvc mockMvc = MockMvcBuilders.standaloneSetup(classUnderTest).build()
