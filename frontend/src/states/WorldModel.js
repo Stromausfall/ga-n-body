@@ -30,28 +30,29 @@ export default class WorldModel {
 
   addBanner() {
     this.banner = this.game.add.text(this.game.width / 2, this.game.height - 20, "")
-    this.banner.font = 'Bangers'
+    this.banner.font = 'PT Mono'
     this.banner.padding.set(10, 16)
-    this.banner.fontSize = 40
+    this.banner.fontSize = 25
     this.banner.fill = '#77BFA3'
     this.banner.smoothed = false
     this.banner.anchor.setTo(0.5)
   }
 
-  updateBannerText(iteration, fitness) {
-    this.banner.text = "iteration " + iteration + ", fitness: " + fitness
+  updateBannerText() {
+    this.banner.text = "iteration " + (this.iteration.iteration - 1) + "/" + this.iteration.experimentArgument.terminationMaxIterations + ", fitness: " + this.iteration.fittest.fitness
   }
 
 
   updateData(iteration) {
-    this.updateBannerText(iteration.iteration, iteration.fittest.fitness);
-
     this.iterations = iteration.fittest.iterations;
     this.experimentArgument = iteration.experimentArgument;
+    this.iteration = iteration;
 
     this.createBodies();
 
     this.currentIterationIndex = 0;
+
+    this.updateBannerText();
 
     // update body positions
     this.game.time.events.repeat(Phaser.Timer.SECOND * 0.01, iteration.fittest.fitness, this.updateBodies, this);
@@ -106,5 +107,7 @@ export default class WorldModel {
       Math.min(
         this.currentIterationIndex,
         this.iterations.length - 1);
+
+    this.updateBannerText();
   }
 }

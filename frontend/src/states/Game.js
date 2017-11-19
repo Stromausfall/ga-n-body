@@ -1,7 +1,7 @@
 /* globals __DEV__ */
 import $ from 'jquery';
 import Phaser from 'phaser'
-import WorldModel from '../sprites/WorldModel'
+import WorldModel from '../states/WorldModel'
 
 export default class extends Phaser.State {
   init() {}
@@ -11,6 +11,9 @@ export default class extends Phaser.State {
     // add a function to the button with id "createExperiment"
     $('#createExperiment').off('click');
     $('#createExperiment').click(function () {
+      // disable the button
+      $('#createExperiment').prop('disabled', true);
+
       // get the data from the input elements
       var JSONObject = {
         "populationSize": $('#populationSize').val(),
@@ -65,10 +68,16 @@ export default class extends Phaser.State {
         console.log("fittest retrieved - starting simulation");
         self.worldModel.updateData(data)
 
+        if (data.iteration >= data.experimentArgument.terminationMaxIterations) {
+          $('#createExperiment').prop('disabled', false);
+        } else {
+          $('#createExperiment').prop('disabled', true);
+        }
 
         // get the fittest after the simulation has finished !
         let timeBeforeGettingNewFittest = Phaser.Timer.SECOND * 0.01 * (data.fittest.fitness + 1);
 
+        // wait at least one second before querying the rest endpoint for a new fittest chromosome
         if (timeBeforeGettingNewFittest < Phaser.Timer.SECOND) {
           timeBeforeGettingNewFittest = Phaser.Timer.SECOND
         }

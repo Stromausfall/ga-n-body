@@ -87,7 +87,7 @@ public class NBodyExperimentArgument implements ExperimentArgument {
         return fitnessMaxDistanceBetweenBodies;
     }
 
-    public double  () {
+    public double getFitnessMinDistanceBetweenBodies() {
         return fitnessMinDistanceBetweenBodies;
     }
 
